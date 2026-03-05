@@ -1,0 +1,74 @@
+<div class="mb-6">
+
+    <label [for]="idInput" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">{{labelInput}}
+    </label>
+
+    <!-- input -->
+    <div class="relative">
+
+        <input [class]="{'border-red-500':control?.invalid && control?.touched
+                ,'border-green-500':control?.valid  }" [formControl]="control"
+            [type]="typeInput || (flag?'password':'text')" [id]="idInput"
+            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500  block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 "
+            placeholder={{placeHolder}} required />
+
+
+        @if(idInput==='password' || idInput==='rePassword'){
+        <span (click)="changeFlag()" class="absolute top-1/4 right-4 cursor-pointer">
+            @if(flag){
+            <i class="fas fa-eye"></i>
+
+            }@else{
+            <i class="fas fa-eye-slash"></i>
+            }
+        </span>
+        }
+    </div>
+
+
+    <!-- validation of input -->
+    @if(control?.errors && control?.touched)
+    {
+    @if(control?.errors?.['required']){
+    <div class="mt-0.5 p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400"
+        role="alert">
+        <span class="font-medium">Error:</span> {{labelInput}} is required.
+    </div>
+    }@if (control?.errors?.['minlength']) {
+
+    <div class="mt-0.5 p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400"
+        role="alert">
+        <span class="font-medium">Error:</span> {{labelInput}} must be at least 3 characters long.
+    </div>
+    }@if (control?.errors?.['maxlength']) {
+
+    <div class="mt-0.5 p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400"
+        role="alert">
+        <span class="font-medium">Error:</span> {{labelInput}} cannot exceed 20 characters.
+    </div>
+    }@if (control?.errors?.['email']) {
+
+    <div class="mt-0.5 p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400"
+        role="alert">
+        <span class="font-medium">Error:</span> Please enter a valid {{labelInput}}.
+    </div>
+    }@if (control?.errors?.['pattern']) {
+
+    <div class="mt-0.5 p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400"
+        role="alert">
+        <span class="font-medium">Error:</span> <ng-content></ng-content>
+
+    </div>
+    }@if (control?.errors?.['matchpassword']) {
+
+    <div class="mt-0.5 p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400"
+        role="alert">
+        <span class="font-medium">Error:</span> Passwords do not match .
+
+    </div>
+    }
+
+    }
+
+
+</div>

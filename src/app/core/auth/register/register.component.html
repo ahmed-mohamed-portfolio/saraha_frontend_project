@@ -1,0 +1,106 @@
+<section class="mt-20 mb-5 flex justify-center items-center dark:bg-gray-500 sm:my-15  md:py-10">
+
+
+    <form [formGroup]="registerForm" (ngSubmit)="regsterSubmit()"
+        class="w-[85%] max-w-80  py-5 p-2  md:w-[60%]  lg:w-[80%] lg:max-w-96 xl:max-w-lg ">
+
+        @if(errorMsg().length>0){
+        <div class="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" role="alert">
+            <span class="font-medium">Error:</span> {{errorMsg()}}
+        </div>
+        }
+
+        <!-- name input -->
+        <app-input [control]="registerForm.get('userName')" [typeInput]="'text'" [idInput]="'userName'"
+            [placeHolder]="'ahmed mohamed'" [labelInput]="'User Name'"></app-input>
+
+
+
+        <!-- email input -->
+        <app-input [control]="registerForm.get('email')" [typeInput]="'email'" [idInput]="'email'"
+            [placeHolder]="'ahmed.mohamed@gmail.com'" [labelInput]="'Email address'"></app-input>
+
+
+        <!-- password input -->
+        <app-input [control]="registerForm.get('password')" [idInput]="'password'" [placeHolder]="'•••••••••'"
+            [labelInput]="'Password'">
+
+            assword must be at least 8 characters, include uppercase,
+            lowercase, number, and special character.
+        </app-input>
+
+
+        <!-- repassword input -->
+        <app-input [control]="registerForm.get('rePassword')" [idInput]="'rePassword'" [placeHolder]="'•••••••••'"
+            [labelInput]="'confirm Password'">
+        </app-input>
+
+
+
+        <!-- phone input -->
+        <app-input [control]="registerForm.get('phone')" [typeInput]="'tel'" [idInput]="'phone'"
+            [placeHolder]="'01003003608'" [labelInput]="'Phone Number'">
+
+            Please enter a valid Egyptian phone number (e.g., 01012345678).
+        </app-input>
+
+
+
+        <!-- ? ngSkipHydration    i dont understand what that mean and what its effect-->
+        <!-- date input -->
+        <label for="date" class="text-sm text-gray-900 font-medium">Date of birth</label>
+        <p-datepicker ngSkipHydration inputId="date" [showIcon]="true" dateFormat="dd-mm-yy" placeholder="7-10-1994"
+            formControlName="dateOfBirth" />
+
+        @if(registerForm.get("dateOfBirth")?.touched && registerForm.get("dateOfBirth")?.invalid){
+        <div class="mt-0.5 p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400"
+            role="alert">
+            <span class="font-medium">Error:</span> Please choose a valid date (e.g., 7-10-1994).
+        </div>
+        }
+
+        <!-- gender input -->
+        <div class="mb-4 mt-4 flex justify-start items-baseline">
+            <label class="block text-sm font-medium text-gray-900 dark:text-gray-100  me-7">
+                Gender
+            </label>
+
+            <div class="card flex justify-start">
+                <div class="flex flex-wrap gap-4">
+                    <div class="flex items-center">
+                        <p-radiobutton name="Gender" value="male" formControlName="gender" inputId="gender1" />
+                        <label for="gender1" class="ml-2">male</label>
+                    </div>
+
+                    <div class="flex items-center">
+                        <p-radiobutton name="Gender" value="female" formControlName="gender" inputId="gender2" />
+                        <label for="gender12" class="ml-2">female</label>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        @if ( registerForm.get('gender')?.touched && registerForm.get('gender')?.invalid)
+        {
+        <div class="mt-0.5 p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400"
+            role="alert">
+            <span class="font-medium">Error:</span> Please choose an gender.
+        </div>
+        }
+
+
+
+
+        <button type="submit"
+            class=" cursor-pointer  text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Submit
+            @if(isLoading()==true){ <i class="fa-solid fa-sync fa-spin"></i>}
+        </button>
+
+    </form>
+
+
+    <img class=" hidden sm:w-[50%] sm:block  md:w-[40%]  lg:w-[30%] xl:w-[25%]  " src="/register.png" alt="">
+
+
+</section>

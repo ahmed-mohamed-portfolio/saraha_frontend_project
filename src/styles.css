@@ -1,0 +1,26 @@
+/* You can add global styles to this file, and also import other style files */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+@import "flowbite/src/themes/default";
+@import "tailwindcss";
+@plugin "flowbite/plugin";
+@source "../node_modules/flowbite";
+
+
+@font-face {
+    font-family: 'LogoFont';
+    src: url('/fonts/Lobster_Two/LobsterTwo-Regular.ttf') format('truetype');
+
+}
+
+
+@font-face {
+    font-family: 'mainProjectFont';
+    src: url('/fonts/Geom/Geom-Regular.ttf') format('truetype');
+
+}
+
+
+body {
+    font-family: 'mainProjectFont', sans-serif;
+    font-size: large;
+}
