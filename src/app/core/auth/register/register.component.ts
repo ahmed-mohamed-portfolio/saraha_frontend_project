@@ -1,6 +1,6 @@
 import { Component, inject, OnInit, signal } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { InputComponent } from "../../../shared/components/input/input.component";
 import { Subscription } from 'rxjs';
 import { DatePicker } from 'primeng/datepicker';
@@ -11,7 +11,7 @@ import { AuthService } from '../../services/api/auth.service';
 
 @Component({
   selector: 'app-register',
-  imports: [InputComponent, ReactiveFormsModule, FormsModule, DatePicker, RadioButtonModule],
+  imports: [InputComponent, ReactiveFormsModule, FormsModule, DatePicker, RadioButtonModule, RouterLink],
   templateUrl: './register.component.html',
   styleUrl: './register.component.scss',
 })
