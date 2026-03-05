@@ -27,6 +27,8 @@ export class RegisterComponent implements OnInit {
   private route: Router = inject(Router)
   isLoading = signal<boolean>(false)
   errorMsg = signal<string>("");
+  errorFlag = signal<boolean>(false);
+
   subscribe: Subscription = new Subscription()
 
 
@@ -92,11 +94,14 @@ export class RegisterComponent implements OnInit {
           console.log("register response", res);
           if (res.message == "user added") {
             this.isLoading.set(false);
+            this.errorFlag.set(false)
             this.route.navigate(["/login"]);
           }
         },
 
         error: (err) => {
+          this.errorFlag.set(true)
+
           this.errorMsg.set(err.error.errorMessage);
           this.isLoading.set(false);
         },
