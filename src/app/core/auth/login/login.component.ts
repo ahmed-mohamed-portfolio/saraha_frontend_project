@@ -1,6 +1,6 @@
 import { AuthService } from './../../services/api/auth.service';
 
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject, OnInit, signal } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 import { InputComponent } from '../../../shared/components/input/input.component';
@@ -18,6 +18,7 @@ export class LoginComponent implements OnInit {
   flag: boolean = true;
   private readonly fb = inject(FormBuilder)
   loginForm!: FormGroup;
+  errorMsg = signal<string>("");
 
   //api variables
   authService: AuthService = inject(AuthService)
@@ -66,8 +67,7 @@ export class LoginComponent implements OnInit {
         next: (res) => {
           console.log("login response", res);
 
-          if (res.status == 200) {
-            console.log("ssssssssssss");
+          if (res.message == "user login successfully") {
 
             // this.cookieService.set('token', res.token)
             // this.toastrService.info("logged in successfully")
@@ -77,7 +77,9 @@ export class LoginComponent implements OnInit {
         },
 
         error: (err) => {
-          console.log(err);
+          console.log(err.error.errorMessage);
+          this.errorMsg.set(err.error.errorMessage);
+
         },
 
       })

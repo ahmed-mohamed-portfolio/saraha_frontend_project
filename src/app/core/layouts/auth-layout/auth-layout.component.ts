@@ -11,7 +11,7 @@ import { RouterOutlet } from '@angular/router';
 
 export class AuthLayoutComponent {
 
-  isLogged: boolean = true
+  isLogged: boolean = false
 
 
 }

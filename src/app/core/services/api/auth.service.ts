@@ -15,12 +15,12 @@ export class AuthService {
   http: HttpClient = inject(HttpClient)
 
   signUp(data: Register): Observable<RegisterRes> {
-    return this.http.post<any>(environment.baseUrl + '/auth/signup', data);
+    return this.http.post<RegisterRes>(environment.baseUrl + '/auth/signup', data);
   }
 
 
   login(data: Login): Observable<LoginRes> {
-    return this.http.post<any>(environment.baseUrl + '/auth/login', data);
+    return this.http.post<LoginRes>(environment.baseUrl + '/auth/login', data);
   }
 
 }

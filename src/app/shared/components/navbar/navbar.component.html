@@ -144,7 +144,26 @@
 
 
 
+      <div class="flex md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse">
 
+        <div>
+          <ul class="flex font-bold ext-gray-800 items-center">
+            <li>
+              <a routerLink="/login"
+                class="block py-2 px-1 text-gray-900 rounded-sm hover:bg-gray-100 md:py-2 md:px-1 md:hover:bg-transparent md:hover:text-main-two md:p-0 md:dark:hover:text-main-two dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700 cursor-pointer"><i
+                  class="fa-solid fa-right-to-bracket"></i>Login</a>
+            </li>
+            <span
+              class="block py-2  text-gray-900 rounded-sm hover:bg-gray-100 md:py-2 md:hover:bg-transparent md:hover:text-main-two md:p-0 md:dark:hover:text-main-two dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700 cursor-pointer">|</span>
+            <li>
+              <a routerLink="/register"
+                class="block py-2 px-1 text-gray-900 rounded-sm hover:bg-gray-100 md:py-2 md:px-1 md:hover:bg-transparent md:hover:text-main-two md:p-0 md:dark:hover:text-main-two dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700 cursor-pointer">Register<i
+                  class="fa-solid fa-cash-register"></i></a>
+            </li>
+          </ul>
+        </div>
+
+      </div>
 
 
 
@@ -153,7 +172,7 @@
 
 
 
-
+        @if(isLogin){
 
         <button type="button"
           class="flex text-sm bg-neutral-primary rounded-full md:me-0 focus:ring-4 focus:ring-neutral-tertiary"
@@ -163,6 +182,7 @@
           <img class="w-8 h-8 rounded-full cursor-pointer" src="/user.png" alt="user photo">
         </button>
 
+        }
 
 
 
@@ -170,8 +190,7 @@
 
 
 
-
-
+        @if(isLogin){
 
         <!-- Dropdown menu -->
         <div class="z-50 hidden bg-neutral-primary-medium border border-default-medium rounded-base shadow-lg w-44"
@@ -198,7 +217,7 @@
             <path stroke="currentColor" stroke-linecap="round" stroke-width="2" d="M5 7h14M5 12h14M5 17h14" />
           </svg>
         </button>
-
+        }
 
       </div>
 
@@ -209,6 +228,7 @@
 
 
 
+    @if(isLogin){
 
     <div class="items-center justify-between hidden w-full md:flex md:w-auto md:order-1" id="navbar-user">
       <ul
@@ -225,6 +245,9 @@
 
       </ul>
     </div>
+
+
+    }
 
   </div>
 </nav>

@@ -3,6 +3,14 @@
     <form class="w-[85%] max-w-80 py-5 p-2 md:w-[60%] lg:w-[80%] lg:max-w-96 xl:max-w-sm" [formGroup]="loginForm"
         (ngSubmit)="loginSubmit()">
 
+
+        @if(errorMsg().length>0){
+        <div class="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" role="alert">
+            <span class="font-medium">Error:</span> {{errorMsg()}}
+        </div>
+        }
+
+
         <!-- email input -->
         <app-input [control]="loginForm.get('email')" [typeInput]="'email'" [idInput]="'email'"
             [placeHolder]="'ahmed.mohamed@gmail.com'" [labelInput]="'Email address'"></app-input>
