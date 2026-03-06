@@ -1,7 +1,10 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { AuthService } from './../../../core/services/api/auth.service';
+import { Component, inject, Input, OnInit } from '@angular/core';
 import { FlowbiteService } from '../../../core/services/flowbite.service';
 import { initFlowbite } from 'flowbite';
-import { RouterLink, RouterLinkActive } from "@angular/router";
+import { Router, RouterLink, RouterLinkActive } from "@angular/router";
+import { CookieService } from 'ngx-cookie-service';
+import { ToastrService } from 'ngx-toastr';
 
 
 @Component({
@@ -14,8 +17,12 @@ import { RouterLink, RouterLinkActive } from "@angular/router";
 export class NavbarComponent implements OnInit {
 
   constructor(private flowbiteService: FlowbiteService) { }
-
+  private readonly cookieService = inject(CookieService)
+  private readonly router: Router = inject(Router)
+  private readonly toastrService: ToastrService = inject(ToastrService)
   @Input({ required: true }) isLogin!: boolean;
+  private readonly authService: AuthService = inject(AuthService)
+
 
   ngOnInit(): void {
 
@@ -25,5 +32,7 @@ export class NavbarComponent implements OnInit {
 
   }
 
-
+  signOut() {
+    this.authService.signOut()
+  }
 }

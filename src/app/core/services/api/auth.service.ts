@@ -6,13 +6,21 @@ import { RegisterRes } from '../../models/register-res';
 import { Register } from '../../models/register';
 import { LoginRes } from '../../models/login-res';
 import { Login } from '../../models/login';
+import { CookieService } from 'ngx-cookie-service';
+import { Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
+import { jwtDecode } from "jwt-decode";
+
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
+  private readonly cookieService: CookieService = inject(CookieService)
+  private readonly http: HttpClient = inject(HttpClient)
+  private readonly router: Router = inject(Router)
+  private readonly toastrService: ToastrService = inject(ToastrService)
 
-  http: HttpClient = inject(HttpClient)
 
   signUp(data: Register): Observable<RegisterRes> {
     return this.http.post<RegisterRes>(environment.baseUrl + '/auth/signup', data);
@@ -21,6 +29,28 @@ export class AuthService {
 
   login(data: Login): Observable<LoginRes> {
     return this.http.post<LoginRes>(environment.baseUrl + '/auth/login', data);
+  }
+
+
+  signOut() {
+    this.cookieService.delete('accessToken')
+    this.cookieService.delete('refreshToken')
+
+    this.router.navigate(['/login'])
+    this.toastrService.info('You have successfully logged out')
+  }
+
+  decodeToken() {
+    let decode
+
+    try {
+      decode = jwtDecode(this.cookieService.get('accessToken'))
+    } catch (error) {
+      this.signOut()
+    }
+
+    return decode
+
   }
 
 }
