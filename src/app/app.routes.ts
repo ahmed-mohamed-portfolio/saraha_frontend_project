@@ -7,19 +7,21 @@ import { MessagesComponent } from './features/messages/messages.component';
 import { SettingsComponent } from './features/settings/settings.component';
 import { NotFoundComponent } from './shared/components/not-found/not-found.component';
 import { PublicSendMessageComponent } from './features/public-send-message/public-send-message.component'
+import { authGuard } from './core/guards/auth.guard';
+import { isloggedGuard } from './core/guards/islogged.guard';
 
 export const routes: Routes = [
 
     { path: '', redirectTo: 'messages', pathMatch: 'full' },
     {
-        path: '', component: AuthLayoutComponent, children: [
+        path: '', component: AuthLayoutComponent, canActivate: [isloggedGuard], children: [
             { path: 'login', component: LoginComponent, title: 'login page' },
             { path: 'register', component: RegisterComponent, title: 'register page' }
         ]
     },
 
     {
-        path: '', component: BlankLayoutComponent, children: [
+        path: '', component: BlankLayoutComponent, canActivate: [authGuard], children: [
             { path: 'messages', component: MessagesComponent, title: 'messages' },
             { path: 'settings', component: SettingsComponent, title: 'settings' },
         ]
