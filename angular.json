@@ -38,7 +38,7 @@
             "styles": [
               "node_modules/@fortawesome/fontawesome-free/css/all.min.css"
               ,
-              "src/styles.css"
+              "src/styles.css","node_modules/ngx-toastr/toastr.css"
             ],
             "server": "src/main.server.ts",
             "outputMode": "server",

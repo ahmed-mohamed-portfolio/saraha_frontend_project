@@ -7,6 +7,7 @@ import { DatePicker } from 'primeng/datepicker';
 import { RadioButtonModule } from 'primeng/radiobutton';
 import { FormsModule } from '@angular/forms';
 import { AuthService } from '../../services/api/auth.service';
+import { ToastrService } from 'ngx-toastr';
 
 
 @Component({
@@ -22,6 +23,7 @@ export class RegisterComponent implements OnInit {
   private readonly fb = inject(FormBuilder);
   registerForm!: FormGroup
   date: Date | undefined;
+  private readonly toastrService: ToastrService = inject(ToastrService)
 
   //api variables
   private route: Router = inject(Router)
@@ -93,6 +95,7 @@ export class RegisterComponent implements OnInit {
         next: (res) => {
           console.log("register response", res);
           if (res.message == "user added") {
+            this.toastrService.success("you can log in now", "user added successfully")
             this.isLoading.set(false);
             this.errorFlag.set(false)
             this.route.navigate(["/login"]);
@@ -103,6 +106,7 @@ export class RegisterComponent implements OnInit {
           this.errorFlag.set(true)
 
           this.errorMsg.set(err.error.errorMessage);
+          this.toastrService.error(err.error.errorMessage)
           this.isLoading.set(false);
         },
 

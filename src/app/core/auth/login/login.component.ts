@@ -5,6 +5,8 @@ import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { Router, RouterLink } from '@angular/router';
 import { InputComponent } from '../../../shared/components/input/input.component';
 import { Subscription } from 'rxjs';
+import { ToastrService } from 'ngx-toastr';
+import { CookieService } from 'ngx-cookie-service';
 
 @Component({
   selector: 'app-login',
@@ -19,10 +21,12 @@ export class LoginComponent implements OnInit {
   private readonly fb = inject(FormBuilder)
   loginForm!: FormGroup;
   errorMsg = signal<string>("");
+  private readonly toastrService: ToastrService = inject(ToastrService)
+  private readonly cookieService = inject(CookieService)
 
   //api variables
   authService: AuthService = inject(AuthService)
-  private route: Router = inject(Router);
+  private router: Router = inject(Router);
   subscribe: Subscription = new Subscription()
 
   ngOnInit(): void {
@@ -69,16 +73,19 @@ export class LoginComponent implements OnInit {
 
           if (res.message == "user login successfully") {
 
-            // this.cookieService.set('token', res.token)
-            // this.toastrService.info("logged in successfully")
-            this.route.navigate(["/messages"])
+            this.cookieService.set('accessToken', res.data.accessToken)
+            this.cookieService.set('refreshToken', res.data.refreshToken)
+
+            this.toastrService.success("logged in successfully")
+            this.router.navigate(["/messages"])
 
           }
         },
 
         error: (err) => {
-          console.log(err.error.errorMessage);
           this.errorMsg.set(err.error.errorMessage);
+          this.toastrService.error(err.error.errorMessage)
+
 
         },
 
