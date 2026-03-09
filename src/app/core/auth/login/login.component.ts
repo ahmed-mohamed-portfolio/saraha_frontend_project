@@ -1,12 +1,16 @@
 import { AuthService } from './../../services/api/auth.service';
 
-import { Component, inject, OnInit, signal } from '@angular/core';
+import { Component, inject, OnInit, PLATFORM_ID, signal } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 import { InputComponent } from '../../../shared/components/input/input.component';
 import { Subscription } from 'rxjs';
 import { ToastrService } from 'ngx-toastr';
 import { CookieService } from 'ngx-cookie-service';
+import { isPlatformBrowser, isPlatformServer } from '@angular/common';
+
+
+declare const google: any;
 
 @Component({
   selector: 'app-login',
@@ -72,13 +76,7 @@ export class LoginComponent implements OnInit {
           console.log("login response", res);
 
           if (res.message == "user login successfully") {
-
-            this.cookieService.set('accessToken', res.data.accessToken)
-            this.cookieService.set('refreshToken', res.data.refreshToken)
-
-            this.toastrService.success("logged in successfully")
-            this.router.navigate(["/messages"])
-
+            this.afterUserSuccessLogin(res.data.accessToken, res.data.refreshToken)
           }
         },
 
@@ -93,4 +91,80 @@ export class LoginComponent implements OnInit {
   }
 
 
+
+
+
+  // sign in with google
+  private googleInitialized = false;
+
+  private platformId = inject(PLATFORM_ID);
+
+
+  ngAfterViewInit(): void {
+    if (!isPlatformBrowser(this.platformId)) return;
+
+    this.initializeGoogle();
+  }
+
+  private initializeGoogle(): void {
+    if (typeof google === 'undefined' || !google?.accounts?.id) {
+      console.error('Google SDK not loaded');
+      return;
+    }
+
+    google.accounts.id.initialize({
+      client_id: '454721329331-ieb8vd87r8mlk8bjf4p60ogm0n5biljd.apps.googleusercontent.com',
+      callback: (response: any) => {
+
+        this.authService.googleLogin(response.credential).subscribe({
+          next: (res) => {
+            console.log("login response by gmail", res);
+
+            if (res.data.user.confireEmail) {
+              this.afterUserSuccessLogin(res.data.accessToken, res.data.refreshToken)
+            }
+
+          },
+          error: (err) => {
+            console.log(err);
+
+          }
+        })
+      }
+    });
+
+    google.accounts.id.renderButton(
+      document.getElementById('google-btn'),
+      {
+        theme: 'outline',
+        size: 'large'
+      }
+    );
+
+    this.googleInitialized = true;
+  }
+
+  loginWithGoogle(): void {
+    if (!isPlatformBrowser(this.platformId)) return;
+    if (!this.googleInitialized) return;
+
+    //thats mean when i click on my button will click in the google hidden button
+    const realGoogleButton = document.querySelector(
+      '#google-btn div[role="button"]'
+    ) as HTMLElement | null;
+
+    realGoogleButton?.click();
+  }
+
+
+
+
+
+  afterUserSuccessLogin(accessToken: string, refreshToken: string) {
+    this.cookieService.set('accessToken', accessToken)
+    this.cookieService.set('refreshToken', refreshToken)
+
+    this.toastrService.success("logged in successfully")
+    this.router.navigate(["/messages"])
+  }
 }

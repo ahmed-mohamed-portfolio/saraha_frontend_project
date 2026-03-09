@@ -53,4 +53,15 @@ export class AuthService {
 
   }
 
+
+
+
+
+  googleLogin(idToken: string): Observable<LoginResByGmail> {
+
+    return this.http.post<LoginResByGmail>('http://localhost:3000/auth/signup/gmail',
+      { idToken }
+    );
+
+  }
 }
