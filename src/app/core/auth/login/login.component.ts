@@ -1,5 +1,4 @@
 import { AuthService } from './../../services/api/auth.service';
-
 import { Component, inject, OnInit, PLATFORM_ID, signal } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
@@ -121,6 +120,8 @@ export class LoginComponent implements OnInit {
             console.log("login response by gmail", res);
 
             if (res.data.user.confireEmail) {
+              console.log("res.data.user.confireEmail", res.data.user.confireEmail);
+
               this.afterUserSuccessLogin(res.data.accessToken, res.data.refreshToken)
             }
 
