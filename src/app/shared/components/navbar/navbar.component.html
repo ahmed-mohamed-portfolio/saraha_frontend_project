@@ -175,8 +175,8 @@
         <div class="z-50 hidden bg-neutral-primary-medium border border-default-medium rounded-base shadow-lg w-44"
           id="user-dropdown">
           <div class="px-4 py-3 text-sm border-b border-default">
-            <span class="block text-heading font-medium">Joseph McFall</span>
-            <span class="block text-body truncate">name@flowbite.com</span>
+            <span class="block text-heading font-medium">{{userName()}} {{lastName()}}</span>
+            <span class="block text-body truncate">{{userEmail()}}</span>
           </div>
 
           <ul class="p-2 text-sm text-body font-medium" aria-labelledby="user-menu-button">
@@ -214,11 +214,11 @@
         class="font-medium flex flex-col p-4 md:p-0 mt-4 border border-default rounded-base bg-neutral-secondary-soft md:flex-row md:space-x-8 rtl:space-x-reverse md:mt-0 md:border-0 md:bg-neutral-primary">
 
         <li>
-          <a routerLink="/messages"
+          <a routerLink="/messages" routerLinkActive="linkActive"
             class="block py-2 px-3 text-heading rounded hover:bg-neutral-tertiary md:hover:bg-transparent md:border-0 md:hover:text-fg-brand md:p-0 md:dark:hover:bg-transparent">messages</a>
         </li>
         <li>
-          <a routerLink="/settings"
+          <a routerLink="/settings" routerLinkActive="linkActive"
             class="block py-2 px-3 text-heading rounded hover:bg-neutral-tertiary md:hover:bg-transparent md:border-0 md:hover:text-fg-brand md:p-0 md:dark:hover:bg-transparent">Settings</a>
         </li>
 

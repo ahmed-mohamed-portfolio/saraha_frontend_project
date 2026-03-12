@@ -8,6 +8,7 @@ import { initFlowbite } from 'flowbite';
 import { FlowbiteService } from '../../../core/services/flowbite.service';
 import { MessageService } from '../../../core/services/api/message.service';
 import { ActivatedRoute } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 
 
 @Component({
@@ -39,6 +40,8 @@ export class CreateMessageComponent {
   inProfile = input<boolean>(false);
 
   private activatedRoute: ActivatedRoute = inject(ActivatedRoute)
+
+  private toastrService: ToastrService = inject(ToastrService)
 
   receverID: string | null = null
   ngOnInit(): void {
@@ -127,7 +130,7 @@ export class CreateMessageComponent {
         console.log(res);
         this.visible.set(false)
         this.newPost.emit(true);
-
+        this.toastrService.success('private message sent successfully')
         this.contents.reset();
         this.saveFile.set(null);
         this.url.set(null);

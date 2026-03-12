@@ -19,4 +19,10 @@ export class MessageService {
 
     return this.http.post(environment.baseUrl + `/message/send-message/${reseverId}`, body)
   }
+
+
+
+  getAllMessages() {
+
+  }
 }

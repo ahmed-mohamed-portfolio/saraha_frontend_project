@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from '../../../../environments/environment.development';
@@ -64,4 +64,27 @@ export class AuthService {
     );
 
   }
+
+
+  getUserById(): Observable<any> { //not used yet
+
+    return this.http.get(environment.baseUrl + '/auth/get-user-by-id');
+
+  }
+
+
+  generateAccessTokenByRefreshToken(): Observable<any> {
+
+    let refreshToken = this.cookieService.get("refreshToken");
+
+    const headers = new HttpHeaders({
+      Authorization: `${refreshToken}`
+    });
+
+    return this.http.get(environment.baseUrl + '/auth/generate-access-token', { headers });
+
+  }
+
+
+
 }

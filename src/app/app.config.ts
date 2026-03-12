@@ -4,9 +4,11 @@ import { routes } from './app.routes';
 import { provideClientHydration, withEventReplay } from '@angular/platform-browser';
 import { providePrimeNG } from 'primeng/config';
 import Aura from '@primeuix/themes/aura';
-import { provideHttpClient, withFetch } from '@angular/common/http';
+import { provideHttpClient, withFetch, withInterceptors } from '@angular/common/http';
 import { provideToastr } from 'ngx-toastr';
 import { CookieService } from 'ngx-cookie-service';
+import { headerInterceptor } from './core/interceptors/header.interceptor';
+import { errorInterceptor } from './core/interceptors/error.interceptor';
 
 
 export const appConfig: ApplicationConfig = {
@@ -19,7 +21,7 @@ export const appConfig: ApplicationConfig = {
         preset: Aura
       }
     }),
-    provideHttpClient(withFetch()),
+    provideHttpClient(withFetch(), withInterceptors([headerInterceptor, errorInterceptor])),
     provideToastr(),
     importProvidersFrom(CookieService)
   ]

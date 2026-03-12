@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { AuthService } from './../../services/api/auth.service';
+import { Component, inject, OnInit } from '@angular/core';
 import { NavbarComponent } from '../../../shared/components/navbar/navbar.component';
 import { RouterOutlet } from '@angular/router';
 

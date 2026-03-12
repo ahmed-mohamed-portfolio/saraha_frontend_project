@@ -5,10 +5,11 @@ import { initFlowbite } from 'flowbite';
 import { ActivatedRoute } from '@angular/router';
 import { NavbarComponent } from "../../shared/components/navbar/navbar.component";
 import { CreateMessageComponent } from '../../shared/components/create-message/create-message.component';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-public-send-message',
-  imports: [NavbarComponent, CreateMessageComponent],
+  imports: [NavbarComponent, CreateMessageComponent, DatePipe],
   templateUrl: './public-send-message.component.html',
   styleUrl: './public-send-message.component.scss',
 })
