@@ -10,6 +10,7 @@ export class MessageService {
   private http: HttpClient = inject(HttpClient)
 
   sendMessage(message: any, reseverId: any): Observable<any> {
+    console.log(reseverId);
 
     const body = {
       message: message

@@ -7,6 +7,7 @@ import { TextareaModule } from 'primeng/textarea';
 import { initFlowbite } from 'flowbite';
 import { FlowbiteService } from '../../../core/services/flowbite.service';
 import { MessageService } from '../../../core/services/api/message.service';
+import { ActivatedRoute } from '@angular/router';
 
 
 @Component({
@@ -37,15 +38,16 @@ export class CreateMessageComponent {
 
   inProfile = input<boolean>(false);
 
-  id: string = "69b015d011d51ca445155e8a"
+  private activatedRoute: ActivatedRoute = inject(ActivatedRoute)
 
+  receverID: string | null = null
   ngOnInit(): void {
 
     this.flowbiteService.loadFlowbite((flowbite) => {
       initFlowbite();
     });
 
-
+    this.getUserId()
   }
 
 
@@ -97,7 +99,7 @@ export class CreateMessageComponent {
       }
 
 
-      this.sendMessage(this.contents.value, this.id);
+      this.sendMessage(this.contents.value, this.receverID);
 
 
     }
@@ -105,9 +107,18 @@ export class CreateMessageComponent {
   }
 
 
-  //http://localhost:4200/public_message/69b015d011d51ca445155e8a
+  getUserId() {
+    this.activatedRoute.paramMap.subscribe({
+      next: (urlParams) => {
+        this.receverID = urlParams.get('id');
 
-  sendMessage(formData: any, receverId: string) {
+      }
+    })
+  }
+
+  //http://localhost:4200/public_message/69b28cec1d9dfd275ebfe154
+
+  sendMessage(formData: any, receverId: string | null) {
 
 
     this.messageService.sendMessage(formData, receverId).subscribe({
