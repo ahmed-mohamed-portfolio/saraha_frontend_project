@@ -1,0 +1,36 @@
+.p-inputtext:enabled:focus {
+border-color: #e7dddd;
+}
+
+.p-inputtext {
+border-radius: 1.5rem;
+}
+
+::ng-deep .p-dialog-header {
+    padding-bottom: 5px;
+}
+
+.p-textarea:enabled:focus {
+     border-color: #e7dddd;
+}
+
+.p-textarea{
+    background-color: #f9fafb;
+}
+
+::ng-deep .p-textarea::placeholder{
+    font-size: 0.9rem;
+}
+
+
+
+::ng-deep .p-inputtext{
+    padding-inline: 0;
+}
+
+
+::ng-deep  .p-dialog {
+max-width: 600px;
+}
+
+@import "primeicons/primeicons.css";

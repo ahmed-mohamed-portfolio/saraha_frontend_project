@@ -27,7 +27,7 @@ export const routes: Routes = [
         ]
     }
     ,
-    { path: 'public_message', component: PublicSendMessageComponent, title: 'send message' }
+    { path: 'public_message/:id', component: PublicSendMessageComponent, title: 'send message' }
     ,
     { path: '**', component: NotFoundComponent, title: 'notFound' }
 
