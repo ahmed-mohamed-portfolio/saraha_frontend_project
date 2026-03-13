@@ -9,6 +9,10 @@ import { provideToastr } from 'ngx-toastr';
 import { CookieService } from 'ngx-cookie-service';
 import { headerInterceptor } from './core/interceptors/header.interceptor';
 import { errorInterceptor } from './core/interceptors/error.interceptor';
+import { NgxSpinnerModule } from 'ngx-spinner';
+import { loadingInterceptor } from './core/interceptors/loading.interceptor';
+import { provideAnimations } from '@angular/platform-browser/animations';
+import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 
 
 export const appConfig: ApplicationConfig = {
@@ -21,8 +25,11 @@ export const appConfig: ApplicationConfig = {
         preset: Aura
       }
     }),
-    provideHttpClient(withFetch(), withInterceptors([headerInterceptor, errorInterceptor])),
+    provideAnimations(),
+    provideAnimationsAsync(),
+
+    provideHttpClient(withFetch(), withInterceptors([headerInterceptor, errorInterceptor, loadingInterceptor])),
     provideToastr(),
-    importProvidersFrom(CookieService)
+    importProvidersFrom(CookieService, NgxSpinnerModule)
   ]
 };

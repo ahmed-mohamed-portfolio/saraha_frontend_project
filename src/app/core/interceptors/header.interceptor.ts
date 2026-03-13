@@ -6,8 +6,8 @@ export const headerInterceptor: HttpInterceptorFn = (req, next) => {
 
   let cookieService: CookieService = inject(CookieService)
 
-  if (cookieService.check('token')) {
-    req = req.clone({ setHeaders: { token: cookieService.get('token') } })
+  if (cookieService.check('accessToken')) {
+    req = req.clone({ setHeaders: { authorization: 'Bearer ' + cookieService.get('accessToken') } })
   }
   return next(req);
 

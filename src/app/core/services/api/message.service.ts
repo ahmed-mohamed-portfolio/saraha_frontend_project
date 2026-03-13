@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { environment } from '../../../../environments/environment.development';
 import { Observable } from 'rxjs';
+import { Messages } from '../../models/messages';
 
 @Injectable({
   providedIn: 'root',
@@ -10,7 +11,6 @@ export class MessageService {
   private http: HttpClient = inject(HttpClient)
 
   sendMessage(message: any, reseverId: any): Observable<any> {
-    console.log(reseverId);
 
     const body = {
       message: message
@@ -22,7 +22,8 @@ export class MessageService {
 
 
 
-  getAllMessages() {
+  getAllMessages(): Observable<Messages> {
+    return this.http.get<Messages>(environment.baseUrl + `/message/get-all-messages`,)
 
   }
 }

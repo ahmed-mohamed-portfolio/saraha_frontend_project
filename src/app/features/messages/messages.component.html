@@ -1,9 +1,14 @@
 <div class="flex justify-center items-center">
 
-    <div class="my-25 w-full max-w-[80%] p-6 bg-neutral-primary-soft border border-default rounded-base shadow-xs">
+    <div
+        class="my-25 w-full max-w-[80%] sm:max-w-[70%] md:max-w-[60%] lg:max-w-[55%] p-6 bg-neutral-primary-soft border border-default rounded-base shadow-xs">
         <h5 class="text-xl font-semibold text-heading mb-6">Private Messages</h5>
         <div class="flow-root">
             <ul role="list" class="divide-y divide-default">
+
+
+                @for (message of this.messages().data; track $index) {
+
 
                 <li class="py-4 sm:py-4">
                     <div class="flex justify-evenly items-center gap-2">
@@ -11,8 +16,8 @@
                             <img class="w-8 h-8 rounded-full" src="/user-secret.png" alt="Bonnie image">
                         </div>
                         <div class="flex-1 min-w-0">
-                            <p class="font-medium text-heading truncate">
-                                Bonnie Green
+                            <p class="font-medium text-sm ">
+                                {{message.message}}
                             </p>
 
                         </div>
@@ -36,6 +41,9 @@
                     </div>
                 </li>
 
+                }@empty {
+                <p>No messages</p>
+                }
             </ul>
         </div>
     </div>

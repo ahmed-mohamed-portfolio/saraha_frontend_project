@@ -1,5 +1,5 @@
 import { GetUserDetailsService } from './services/get-user-details.service';
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject, OnInit, signal, WritableSignal } from '@angular/core';
 import { FlowbiteService } from '../../core/services/flowbite.service';
 import { initFlowbite } from 'flowbite';
 import { ActivatedRoute } from '@angular/router';
@@ -20,7 +20,7 @@ export class PublicSendMessageComponent implements OnInit {
 
 
   id: string | null = null
-  userDetails: UserDetails | null = null
+  userDetails: WritableSignal<UserDetails | null> = signal(null)
 
   ngOnInit(): void {
 
@@ -48,7 +48,7 @@ export class PublicSendMessageComponent implements OnInit {
     this.getUserDetailsService.getUserDetails(this.id).subscribe({
       next: (res) => {
         if (res) {
-          this.userDetails = res
+          this.userDetails.set(res)
         }
 
       },
