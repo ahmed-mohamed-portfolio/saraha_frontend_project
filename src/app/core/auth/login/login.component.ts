@@ -27,7 +27,7 @@ export class LoginComponent implements OnInit {
   private readonly toastrService: ToastrService = inject(ToastrService)
   private readonly cookieService = inject(CookieService)
 
-  //api variables
+  //* api variables
   authService: AuthService = inject(AuthService)
   private router: Router = inject(Router);
   subscribe: Subscription = new Subscription()
@@ -37,10 +37,10 @@ export class LoginComponent implements OnInit {
   }
 
 
-  //for eye icon in html
+  //* for eye icon in html
   changeFlag() { this.flag = !this.flag }
 
-  //all data input and validation
+  //* all data input and validation
   loginInitForm(): void {
 
     this.loginForm = this.fb.group({
@@ -50,7 +50,7 @@ export class LoginComponent implements OnInit {
 
   }
 
-  //when press submit
+  //* when press submit
   loginSubmit() {
 
     if (this.loginForm.valid) {
@@ -64,7 +64,7 @@ export class LoginComponent implements OnInit {
 
 
 
-  //send login data to api and loader
+  //* send login data to api and loader
   logIn() {
     this.subscribe.unsubscribe();
     console.log(this.loginForm.value);
@@ -93,7 +93,7 @@ export class LoginComponent implements OnInit {
 
 
 
-  // sign in with google
+  //* sign in with google
   private googleInitialized = false;
 
   private platformId = inject(PLATFORM_ID);
@@ -149,7 +149,7 @@ export class LoginComponent implements OnInit {
     if (!isPlatformBrowser(this.platformId)) return;
     if (!this.googleInitialized) return;
 
-    //thats mean when i click on my button will click in the google hidden button
+    //*thats mean when i click on my button will click in the google hidden button
     const realGoogleButton = document.querySelector(
       '#google-btn div[role="button"]'
     ) as HTMLElement | null;

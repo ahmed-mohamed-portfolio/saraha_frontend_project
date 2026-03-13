@@ -8,6 +8,6 @@ export const loadingInterceptor: HttpInterceptorFn = (req, next) => {
   const ngxSpinnerService = inject(NgxSpinnerService)
   ngxSpinnerService.show();
   return next(req).pipe(finalize(() => { ngxSpinnerService.hide(); }));
-  //! i am local and i need to test that feacher
+  //!!! i am local and i need to test that feacher
 
 };

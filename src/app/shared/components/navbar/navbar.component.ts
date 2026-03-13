@@ -41,7 +41,7 @@ export class NavbarComponent implements OnInit {
 
 
 
-    if (isPlatformBrowser(this.platformId)) { //! i dont love this solution - i need to use httpolycookies in my project
+    if (isPlatformBrowser(this.platformId)) { //!!! i dont love this solution - i need to use httpolycookies in my project
 
       // this.getUserNameAndEmail()
 

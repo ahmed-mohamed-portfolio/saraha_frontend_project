@@ -9,7 +9,10 @@ export const errorInterceptor: HttpInterceptorFn = (req, next) => {
 
 
   return next(req).pipe(catchError((err) => {
-    toastrService.error(err.error.message)
+    if (err.error.errorMessage != "jwt expired") {         //!!!i need some oone check this after me - no one teach me that - that may get bad behaviour
+
+      toastrService.error(err.error.errorMessage)
+    }
     return throwError(() => err)
   }))
 };

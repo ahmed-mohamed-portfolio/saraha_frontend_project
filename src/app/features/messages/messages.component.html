@@ -8,8 +8,7 @@
 
 
                 @for (message of this.messages().data; track $index) {
-
-
+                <!--??? i need to make it defer or any thing appear when no message  -->
                 <li class="py-4 sm:py-4">
                     <div class="flex justify-evenly items-center gap-2">
                         <div class="shrink-0">
@@ -41,8 +40,6 @@
                     </div>
                 </li>
 
-                }@empty {
-                <p>No messages</p>
                 }
             </ul>
         </div>

@@ -81,6 +81,7 @@ export class AuthService {
       Authorization: `${refreshToken}`
     });
 
+
     return this.http.get(environment.baseUrl + '/auth/generate-access-token', { headers });
 
   }
