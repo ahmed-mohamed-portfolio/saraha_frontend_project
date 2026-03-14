@@ -4,6 +4,8 @@ import { MessageService } from '../../core/services/api/message.service';
 import { Messages } from '../../core/models/messages';
 import { CookieService } from 'ngx-cookie-service';
 import { isPlatformServer } from '@angular/common';
+import { ToastrService } from 'ngx-toastr';
+import { environment } from '../../../environments/environment.development';
 
 @Component({
   selector: 'app-messages',
@@ -14,14 +16,15 @@ import { isPlatformServer } from '@angular/common';
 export class MessagesComponent implements OnInit {
 
   private readonly messageService: MessageService = inject(MessageService)
-
-  messages: WritableSignal<Messages> = signal({} as Messages);
-
   private platformId = inject(PLATFORM_ID)
-
+  private authService: AuthService = inject(AuthService)
+  private cookieService: CookieService = inject(CookieService)
+  private toastrService: ToastrService = inject(ToastrService)
+  messages: WritableSignal<Messages> = signal({} as Messages);
 
 
   ngOnInit(): void {
+
     //!!! i need to change that
     if (isPlatformServer(this.platformId)) {
       return
@@ -32,8 +35,15 @@ export class MessagesComponent implements OnInit {
 
   }
 
-  private authService: AuthService = inject(AuthService)
-  private cookieService: CookieService = inject(CookieService)
+
+
+  copyLink(id: string) {
+
+    navigator.clipboard.writeText(`${environment.frontUrl}/oneMesssage/${id}`);
+    this.toastrService.info("you can past link in any browser", "message url coped")
+  }
+
+
 
   getAllMessages() {
     this.messageService.getAllMessages().subscribe({
@@ -42,20 +52,6 @@ export class MessagesComponent implements OnInit {
         this.messages.set(res)
       },
       error: (err) => {
-        //!!!i need some oone check this after me - no one teach me that - that may get bad behaviour
-        if (err.error.errorMessage === 'jwt expired') {
-
-          this.authService.generateAccessTokenByRefreshToken().subscribe({
-            next: (res) => {
-
-              this.cookieService.set("accessToken", res.data)
-              this.getAllMessages()
-            }, error: (err) => {
-              console.log(err);
-
-            }
-          })
-        }
 
         console.log(err);
 

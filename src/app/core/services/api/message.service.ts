@@ -26,4 +26,15 @@ export class MessageService {
     return this.http.get<Messages>(environment.baseUrl + `/message/get-all-messages`,)
 
   }
+
+
+  getOneMessages(msgId: string | null): Observable<any> {
+    if (msgId == null) {
+      console.log('i am null in getonemessage in message service');
+    }
+
+    return this.http.get<any>(environment.baseUrl + `/message/get-one-messages/${msgId}`)
+
+  }
+
 }

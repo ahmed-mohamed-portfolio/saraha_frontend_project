@@ -9,6 +9,7 @@ import { NotFoundComponent } from './shared/components/not-found/not-found.compo
 import { PublicSendMessageComponent } from './features/public-send-message/public-send-message.component'
 import { authGuard } from './core/guards/auth.guard';
 import { isloggedGuard } from './core/guards/islogged.guard';
+import { OneMessageComponent } from './features/one-message/one-message.component';
 
 export const routes: Routes = [
 
@@ -23,6 +24,7 @@ export const routes: Routes = [
     {
         path: '', component: BlankLayoutComponent, canActivate: [authGuard], children: [
             { path: 'messages', component: MessagesComponent, title: 'messages' },
+            { path: 'oneMesssage/:msgId', component: OneMessageComponent, title: 'One Message' },
             { path: 'settings', component: SettingsComponent, title: 'settings' },
         ]
     }

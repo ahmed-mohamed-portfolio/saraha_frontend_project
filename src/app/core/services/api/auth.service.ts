@@ -76,6 +76,7 @@ export class AuthService {
   generateAccessTokenByRefreshToken(): Observable<any> {
 
     let refreshToken = this.cookieService.get("refreshToken");
+    console.log("refreshtoken", refreshToken);
 
     const headers = new HttpHeaders({
       Authorization: `${refreshToken}`
