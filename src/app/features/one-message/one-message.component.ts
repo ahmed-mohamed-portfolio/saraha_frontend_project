@@ -1,7 +1,8 @@
 import { isPlatformServer } from '@angular/common';
 import { MessageService } from './../../core/services/api/message.service';
 import { Component, inject, OnInit, PLATFORM_ID, signal, WritableSignal } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-one-message',
@@ -13,8 +14,11 @@ export class OneMessageComponent implements OnInit {
 
   private readonly messageService: MessageService = inject(MessageService)
   private activatedRoute: ActivatedRoute = inject(ActivatedRoute)
-  message: WritableSignal<Message> = signal({} as Message)
   private platformId = inject(PLATFORM_ID)
+  private toastrService: ToastrService = inject(ToastrService)
+  private router = inject(Router)
+  message: WritableSignal<Message> = signal({} as Message)
+
 
   ngOnInit(): void {
 
@@ -45,6 +49,25 @@ export class OneMessageComponent implements OnInit {
       next: (res) => {
         console.log(res);
         this.message.set(res)
+
+      },
+      error: (err) => {
+        console.log(err);
+
+      }
+    })
+  }
+
+
+
+  removeMessage(msgId: string) {
+    console.log("msgId", msgId);
+
+    this.messageService.deleteMessages(msgId).subscribe({
+      next: (res) => {
+        console.log(res);
+        this.toastrService.info("message removed successfully")
+        this.router.navigate(["/messages"])
 
       },
       error: (err) => {

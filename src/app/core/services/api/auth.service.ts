@@ -40,6 +40,7 @@ export class AuthService {
     this.toastrService.info('You have successfully logged out')
   }
 
+
   decodeToken() {
     let decode
 
@@ -54,9 +55,6 @@ export class AuthService {
   }
 
 
-
-
-
   googleLogin(idToken: string): Observable<LoginResByGmail> {
 
     return this.http.post<LoginResByGmail>(environment.baseUrl + '/auth/signup/gmail',
@@ -66,7 +64,7 @@ export class AuthService {
   }
 
 
-  getUserById(): Observable<any> { //not used yet
+  getUserById(): Observable<any> { //*i dont use it in front end .. when i need to get user infos i decode jwt access token and get infos from it
 
     return this.http.get(environment.baseUrl + '/auth/get-user-by-id');
 
@@ -76,7 +74,6 @@ export class AuthService {
   generateAccessTokenByRefreshToken(): Observable<any> {
 
     let refreshToken = this.cookieService.get("refreshToken");
-    console.log("refreshtoken", refreshToken);
 
     const headers = new HttpHeaders({
       Authorization: `${refreshToken}`

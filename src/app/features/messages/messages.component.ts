@@ -60,4 +60,21 @@ export class MessagesComponent implements OnInit {
     })
   }
 
+
+
+  removeMessage(msgId: string) {
+    console.log("msgId", msgId);
+
+    this.messageService.deleteMessages(msgId).subscribe({
+      next: (res) => {
+        console.log(res);
+        this.toastrService.info("message removed successfully")
+        this.getAllMessages()
+      },
+      error: (err) => {
+        console.log(err);
+
+      }
+    })
+  }
 }

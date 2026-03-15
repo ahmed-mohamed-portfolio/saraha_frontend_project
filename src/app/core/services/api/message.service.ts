@@ -8,6 +8,7 @@ import { Messages } from '../../models/messages';
   providedIn: 'root',
 })
 export class MessageService {
+
   private http: HttpClient = inject(HttpClient)
 
   sendMessage(message: any, reseverId: any): Observable<any> {
@@ -19,7 +20,6 @@ export class MessageService {
 
     return this.http.post(environment.baseUrl + `/message/send-message/${reseverId}`, body)
   }
-
 
 
   getAllMessages(): Observable<Messages> {
@@ -35,6 +35,11 @@ export class MessageService {
 
     return this.http.get<any>(environment.baseUrl + `/message/get-one-messages/${msgId}`)
 
+  }
+
+
+  deleteMessages(msgId: string): Observable<any> {
+    return this.http.delete<any>(environment.baseUrl + `/message/delete-messages/${msgId}`)
   }
 
 }
