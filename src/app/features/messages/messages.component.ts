@@ -48,6 +48,7 @@ export class MessagesComponent implements OnInit {
   getAllMessages() {
     this.messageService.getAllMessages().subscribe({
       next: (res) => {
+        console.log("all messages", res);
 
         this.messages.set(res)
       },

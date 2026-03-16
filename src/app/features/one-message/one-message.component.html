@@ -22,6 +22,10 @@
 
                             </p>
 
+                            @if (message().data) {
+                            <img class="m-2 rounded-[5px]" [src]="message().data.image" alt="">
+                            }
+
                         </div>
 
 

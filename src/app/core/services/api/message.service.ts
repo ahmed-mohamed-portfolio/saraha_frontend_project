@@ -5,6 +5,7 @@ import { Observable } from 'rxjs';
 import { Messages } from '../../models/messages';
 import { OneMessage } from '../../models/one-message';
 import { DeletedMessageRes } from '../../models/deleted-message-res';
+import { OneMessageRes } from '../../models/one-message-res';
 
 @Injectable({
   providedIn: 'root',
@@ -13,14 +14,9 @@ export class MessageService {
 
   private http: HttpClient = inject(HttpClient)
 
-  sendMessage(message: any, reseverId: any): Observable<any> {//* let message: any till i upload photo
+  sendMessage(message: FormData, reseverId: string | null): Observable<OneMessageRes> {
 
-    const body = {
-      message: message
-    }
-
-
-    return this.http.post(environment.baseUrl + `/message/send-message/${reseverId}`, body)
+    return this.http.post<OneMessageRes>(environment.baseUrl + `/message/send-message/${reseverId}`, message)
   }
 
 

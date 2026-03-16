@@ -1,6 +1,7 @@
 
 
-interface Message {
+export interface OneMessageRes {
+
     status: number;
     message: string;
     data: Data;

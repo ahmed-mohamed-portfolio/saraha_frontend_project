@@ -94,7 +94,7 @@ export class CreateMessageComponent {
 
       const formData = new FormData()
 
-      formData.append('body', this.contents.value)
+      formData.append('message', this.contents.value)
 
       let file = this.saveFile()
 
@@ -103,7 +103,7 @@ export class CreateMessageComponent {
       }
 
 
-      this.sendMessage(this.contents.value, this.receverID());
+      this.sendMessage(formData, this.receverID());
 
 
     }
@@ -114,7 +114,7 @@ export class CreateMessageComponent {
 
 
 
-  sendMessage(formData: any, receverId: string | null) {
+  sendMessage(formData: FormData, receverId: string | null) {
 
 
     this.messageService.sendMessage(formData, receverId).subscribe({

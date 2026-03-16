@@ -1,7 +1,5 @@
 
 
-
-
 export interface Messages {
     status: number;
     message: string;
@@ -11,4 +9,5 @@ export interface Messages {
 interface Datum {
     _id: string;
     message: string;
+    image?: string;
 }

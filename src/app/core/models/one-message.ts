@@ -9,6 +9,7 @@ export interface OneMessage {
 interface Data {
     _id: string;
     message: string;
+    image: string;
     receverId: string;
     __v: number;
 }
