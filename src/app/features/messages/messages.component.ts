@@ -21,7 +21,7 @@ export class MessagesComponent implements OnInit {
   private toastrService: ToastrService = inject(ToastrService)
   private platformId = inject(PLATFORM_ID)
   messages: WritableSignal<Messages> = signal({} as Messages);
-
+  isLoading: WritableSignal<boolean> = signal(true);
 
   ngOnInit(): void {
 
@@ -46,13 +46,16 @@ export class MessagesComponent implements OnInit {
 
 
   getAllMessages() {
+    this.isLoading.set(true)
     this.messageService.getAllMessages().subscribe({
       next: (res) => {
         console.log("all messages", res);
+        this.isLoading.set(false)
 
         this.messages.set(res)
       },
       error: (err) => {
+        this.isLoading.set(false)
 
         console.log(err);
 

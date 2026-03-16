@@ -6,7 +6,9 @@
         <div class="flow-root">
             <ul role="list" class="divide-y divide-default">
 
-
+                @if(isLoading()){
+                <i class="fa-solid fa-sync fa-spin"></i>
+                }@else if (messages().data.length) {
                 @for (message of messages().data; track message._id ;) {
                 <!--??? i need to make it defer or any thing appear when no message  -->
                 <li class="py-4 sm:py-4">
@@ -89,6 +91,8 @@
                     </div>
                 </li>
 
+                }}@else {
+                <p>you dont have private messages</p>
                 }
             </ul>
         </div>
