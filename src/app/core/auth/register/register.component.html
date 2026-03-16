@@ -143,8 +143,8 @@
         <!-- ? ngSkipHydration    i dont understand what that mean and what its effect-->
         <!-- date input -->
         <label for="date" class="text-sm text-gray-900 font-medium">Date of birth</label>
-        <p-datepicker ngSkipHydration inputId="date" [showIcon]="true" dateFormat="dd-mm-yy" placeholder="7-10-1994"
-            formControlName="dateOfBirth" />
+        <p-datepicker class="w-full" ngSkipHydration inputId="date" [showIcon]="true" dateFormat="dd-mm-yy"
+            placeholder="7-10-1994" formControlName="dateOfBirth" />
 
         @if(registerForm.get("dateOfBirth")?.touched && registerForm.get("dateOfBirth")?.invalid){
         <div class="mt-0.5 p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400"
