@@ -14,5 +14,15 @@ interface Data {
     phone: string;
     dateOfBirth: string;
     gender: string;
+    provider: string;
+    role: string;
+    shareProfileName: string;
     __v: number;
 }
+
+
+
+
+
+
+

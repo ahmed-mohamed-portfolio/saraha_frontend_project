@@ -11,8 +11,8 @@ export class GetUserDetailsService {
   private readonly http: HttpClient = inject(HttpClient)
 
 
-  getUserDetails(id: string | null): Observable<UserDetails> {
-    return this.http.get<UserDetails>(environment.baseUrl + `/auth/shared-user/${id}`)
+  getUserDetailsByProfileName(profileName: string | null): Observable<UserDetails> {
+    return this.http.get<UserDetails>(environment.baseUrl + `/auth/shared-user/${profileName}`)
 
   }
 

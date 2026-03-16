@@ -43,14 +43,15 @@ export class CreateMessageComponent {
 
   private toastrService: ToastrService = inject(ToastrService)
 
-  receverID: string | null = null
+
+  receverID = input.required<string | null>();
+
   ngOnInit(): void {
 
     this.flowbiteService.loadFlowbite((flowbite) => {
       initFlowbite();
     });
 
-    this.getUserId()
   }
 
 
@@ -102,7 +103,7 @@ export class CreateMessageComponent {
       }
 
 
-      this.sendMessage(this.contents.value, this.receverID);
+      this.sendMessage(this.contents.value, this.receverID());
 
 
     }
@@ -110,16 +111,8 @@ export class CreateMessageComponent {
   }
 
 
-  getUserId() {
-    this.activatedRoute.paramMap.subscribe({
-      next: (urlParams) => {
-        this.receverID = urlParams.get('id');
 
-      }
-    })
-  }
 
-  //http://localhost:4200/public_message/69b28cec1d9dfd275ebfe154
 
   sendMessage(formData: any, receverId: string | null) {
 
@@ -137,7 +130,7 @@ export class CreateMessageComponent {
 
       },
       error: (err) => {
-        console.log(err);
+        console.log("from sendMessage", err);
       }
     })
 

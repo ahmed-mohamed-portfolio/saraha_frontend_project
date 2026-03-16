@@ -16,10 +16,10 @@ import { environment } from '../../../environments/environment.development';
 export class MessagesComponent implements OnInit {
 
   private readonly messageService: MessageService = inject(MessageService)
-  private platformId = inject(PLATFORM_ID)
   private authService: AuthService = inject(AuthService)
   private cookieService: CookieService = inject(CookieService)
   private toastrService: ToastrService = inject(ToastrService)
+  private platformId = inject(PLATFORM_ID)
   messages: WritableSignal<Messages> = signal({} as Messages);
 
 
@@ -29,7 +29,6 @@ export class MessagesComponent implements OnInit {
     if (isPlatformServer(this.platformId)) {
       return
     }
-
 
     this.getAllMessages()
 
@@ -41,6 +40,7 @@ export class MessagesComponent implements OnInit {
 
     navigator.clipboard.writeText(`${environment.frontUrl}/oneMesssage/${id}`);
     this.toastrService.info("you can past link in any browser", "message url coped")
+
   }
 
 
@@ -77,4 +77,6 @@ export class MessagesComponent implements OnInit {
       }
     })
   }
+
+
 }

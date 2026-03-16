@@ -24,12 +24,12 @@ export class NavbarComponent implements OnInit {
   private readonly router: Router = inject(Router)
   private readonly toastrService: ToastrService = inject(ToastrService)
   private readonly authService: AuthService = inject(AuthService)
+
   @Input({ required: true }) isLogin!: boolean;
+
   userName: WritableSignal<string> = signal('')
   lastName: WritableSignal<string> = signal('')
-
   userEmail: WritableSignal<string> = signal('')
-
   platformId = inject(PLATFORM_ID)
 
 
@@ -43,18 +43,10 @@ export class NavbarComponent implements OnInit {
 
     if (isPlatformBrowser(this.platformId)) { //!!! i dont love this solution - i need to use httpolycookies in my project
 
-      // this.getUserNameAndEmail()
+      if (this.isLogin) {
 
-      if (this.cookieService.get('accessToken')) {
-        let decodeAccessToken: DecodeAccessToken = jwtDecode(this.cookieService.get('accessToken'))
-        if (decodeAccessToken) {
-          this.userName.set(decodeAccessToken.firstName)
-          this.userEmail.set(decodeAccessToken.email)
-          this.lastName.set(decodeAccessToken.lastName)
-        }
+        this.getUserNameAndEmail()
       }
-
-
 
     }
 
@@ -69,37 +61,24 @@ export class NavbarComponent implements OnInit {
 
 
 
-  // getUserNameAndEmail() {
-  //   this.authService.getUserById().subscribe({
-  //     next: (res) => {
-  //       this.userEmail.set(res.email)
-  //       console.log(this.userEmail());
+  getUserNameAndEmail() {
+    this.authService.getUserById().subscribe({
+      next: (res) => {
+        this.userEmail.set(res.data.email)
 
-  //       this.userName.set(res.firstName + ' ' + res.lastName)
-  //       console.log(this.userName());
+        this.userName.set(res.data.firstName + ' ' + res.data.lastName)
 
-  //       console.log(res);
+        console.log("GET user by id", res);
 
-  //     },
-  //     error: (err) => {
-  //       console.log(err);
+      },
+      error: (err) => {
+        console.log(err);
 
-  //       if (err.error.errorMessage == 'jwt expired') {
-  //         this.authService.generateAccessTokenByRefreshToken().subscribe({
-  //           next: (res) => {
-  //             this.cookieService.set("accessToken", res.data)
-  //             console.log(res);
+      }
+    })
+  }
 
-  //           },
-  //           error: (err) => {
-  //             this.authService.signOut()
-  //           }
-  //         })
-  //       }
 
-  //     }
-  //   })
-  // }
 
 
 }

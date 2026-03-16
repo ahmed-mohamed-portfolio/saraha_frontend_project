@@ -1,5 +1,5 @@
 import { AuthService } from './../../services/api/auth.service';
-import { Component, inject, OnInit, PLATFORM_ID, signal } from '@angular/core';
+import { Component, inject, OnDestroy, OnInit, PLATFORM_ID, signal } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 import { InputComponent } from '../../../shared/components/input/input.component';
@@ -17,7 +17,7 @@ declare const google: any;
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss',
 })
-export class LoginComponent implements OnInit {
+export class LoginComponent implements OnInit, OnDestroy {
 
 
   flag: boolean = true;
@@ -80,9 +80,8 @@ export class LoginComponent implements OnInit {
         },
 
         error: (err) => {
-          this.errorMsg.set(err.error.errorMessage);
-          this.toastrService.error(err.error.errorMessage)
 
+          console.log("login error", err);
 
         },
 
@@ -127,7 +126,7 @@ export class LoginComponent implements OnInit {
 
           },
           error: (err) => {
-            console.log(err);
+            console.log("google login error", err);
 
           }
         })
@@ -165,7 +164,13 @@ export class LoginComponent implements OnInit {
     this.cookieService.set('accessToken', accessToken)
     this.cookieService.set('refreshToken', refreshToken)
 
-    this.toastrService.success("logged in successfully")
+    this.toastrService.success("You have logged in successfully.", "Login Successful")
     this.router.navigate(["/messages"])
+  }
+
+
+  ngOnDestroy(): void {
+    this.subscribe.unsubscribe();
+
   }
 }

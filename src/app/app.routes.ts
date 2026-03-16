@@ -24,12 +24,12 @@ export const routes: Routes = [
     {
         path: '', component: BlankLayoutComponent, canActivate: [authGuard], children: [
             { path: 'messages', component: MessagesComponent, title: 'messages' },
-            { path: 'oneMesssage/:msgId', component: OneMessageComponent, title: 'One Message' },
             { path: 'settings', component: SettingsComponent, title: 'settings' },
         ]
-    }
+    },
+    { path: 'oneMesssage/:msgId', component: OneMessageComponent, title: 'One Message' }
     ,
-    { path: 'public_message/:id', component: PublicSendMessageComponent, title: 'send message' }
+    { path: 'public_message/:profileName', component: PublicSendMessageComponent, title: 'send message' }
     ,
     { path: '**', component: NotFoundComponent, title: 'notFound' }
 

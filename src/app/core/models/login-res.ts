@@ -22,6 +22,6 @@ interface ExistUser {
     gender: string;
     provider: string;
     role: string;
+    shareProfileName: string;
     __v: number;
 }
-

@@ -9,7 +9,9 @@ import { Login } from '../../models/login';
 import { CookieService } from 'ngx-cookie-service';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
-import { jwtDecode } from "jwt-decode";
+import { NewToken } from '../../models/new-token';
+import { jwtDecode } from 'jwt-decode';
+import { DecodeAccessToken } from '../../models/decode-access-token';
 
 
 @Injectable({
@@ -37,22 +39,9 @@ export class AuthService {
     this.cookieService.delete('refreshToken')
 
     this.router.navigate(['/login'])
-    this.toastrService.info('You have successfully logged out')
+    this.toastrService.info("You have successfully logged out.", "Logout Successful")
   }
 
-
-  decodeToken() {
-    let decode
-
-    try {
-      decode = jwtDecode(this.cookieService.get('accessToken'))
-    } catch (error) {
-      this.signOut()
-    }
-
-    return decode
-
-  }
 
 
   googleLogin(idToken: string): Observable<LoginResByGmail> {
@@ -64,14 +53,14 @@ export class AuthService {
   }
 
 
-  getUserById(): Observable<any> { //*i dont use it in front end .. when i need to get user infos i decode jwt access token and get infos from it
+  getUserById(): Observable<UserDetails> {
 
-    return this.http.get(environment.baseUrl + '/auth/get-user-by-id');
+    return this.http.get<UserDetails>(environment.baseUrl + '/auth/get-user-by-id');
 
   }
 
 
-  generateAccessTokenByRefreshToken(): Observable<any> {
+  generateAccessTokenByRefreshToken(): Observable<NewToken> {
 
     let refreshToken = this.cookieService.get("refreshToken");
 
@@ -80,10 +69,26 @@ export class AuthService {
     });
 
 
-    return this.http.get(environment.baseUrl + '/auth/generate-access-token', { headers });
+    return this.http.get<NewToken>(environment.baseUrl + '/auth/generate-access-token', { headers });
 
   }
 
+
+
+  decodeToken(): DecodeAccessToken | null {
+    const token = this.cookieService.get('accessToken');
+
+    if (!token) {
+      return null;
+    }
+
+    try {
+      return jwtDecode<DecodeAccessToken>(token);
+    } catch (error) {
+      this.signOut();
+      return null;
+    }
+  }
 
 
 }

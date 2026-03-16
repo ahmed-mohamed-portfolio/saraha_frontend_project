@@ -3,6 +3,8 @@ import { inject, Injectable } from '@angular/core';
 import { environment } from '../../../../environments/environment.development';
 import { Observable } from 'rxjs';
 import { Messages } from '../../models/messages';
+import { OneMessage } from '../../models/one-message';
+import { DeletedMessageRes } from '../../models/deleted-message-res';
 
 @Injectable({
   providedIn: 'root',
@@ -11,7 +13,7 @@ export class MessageService {
 
   private http: HttpClient = inject(HttpClient)
 
-  sendMessage(message: any, reseverId: any): Observable<any> {
+  sendMessage(message: any, reseverId: any): Observable<any> {//* let message: any till i upload photo
 
     const body = {
       message: message
@@ -28,18 +30,18 @@ export class MessageService {
   }
 
 
-  getOneMessages(msgId: string | null): Observable<any> {
+  getOneMessages(msgId: string | null): Observable<OneMessage> {
     if (msgId == null) {
       console.log('i am null in getonemessage in message service');
     }
 
-    return this.http.get<any>(environment.baseUrl + `/message/get-one-messages/${msgId}`)
+    return this.http.get<OneMessage>(environment.baseUrl + `/message/get-one-messages/${msgId}`)
 
   }
 
 
-  deleteMessages(msgId: string): Observable<any> {
-    return this.http.delete<any>(environment.baseUrl + `/message/delete-messages/${msgId}`)
+  deleteMessages(msgId: string): Observable<DeletedMessageRes> {
+    return this.http.delete<DeletedMessageRes>(environment.baseUrl + `/message/delete-messages/${msgId}`)
   }
 
 }

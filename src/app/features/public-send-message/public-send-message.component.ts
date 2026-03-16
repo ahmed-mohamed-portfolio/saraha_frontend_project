@@ -19,12 +19,12 @@ export class PublicSendMessageComponent implements OnInit {
   private readonly getUserDetailsService = inject(GetUserDetailsService)
 
 
-  id: string | null = null
+  profileName: string | null = null
   userDetails: WritableSignal<UserDetails | null> = signal(null)
-
+  id: WritableSignal<string> = signal('')
   ngOnInit(): void {
 
-    this.getUserId()
+    this.getUserProfileName()
     this.getUserDetails()
 
     this.flowbiteService.loadFlowbite((flowbite) => {
@@ -33,10 +33,10 @@ export class PublicSendMessageComponent implements OnInit {
   }
 
 
-  getUserId() {
+  getUserProfileName() {
     this.activatedRoute.paramMap.subscribe({
       next: (urlParams) => {
-        this.id = urlParams.get('id');
+        this.profileName = urlParams.get('profileName');
 
       }
     })
@@ -45,15 +45,17 @@ export class PublicSendMessageComponent implements OnInit {
 
   getUserDetails() {
 
-    this.getUserDetailsService.getUserDetails(this.id).subscribe({
+    this.getUserDetailsService.getUserDetailsByProfileName(this.profileName).subscribe({
       next: (res) => {
         if (res) {
+          console.log("getUserDetailsByProfileName", res);
+          this.id.set(res.data._id)
           this.userDetails.set(res)
         }
 
       },
       error: (err) => {
-        console.log(err);
+        console.log("from getUserDetailsByProfileName", err);
 
       }
     })

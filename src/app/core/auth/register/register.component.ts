@@ -1,4 +1,4 @@
-import { Component, inject, OnInit, signal } from '@angular/core';
+import { Component, inject, OnDestroy, OnInit, signal } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 import { InputComponent } from "../../../shared/components/input/input.component";
@@ -8,6 +8,7 @@ import { RadioButtonModule } from 'primeng/radiobutton';
 import { FormsModule } from '@angular/forms';
 import { AuthService } from '../../services/api/auth.service';
 import { ToastrService } from 'ngx-toastr';
+import { environment } from '../../../../environments/environment.development';
 
 
 @Component({
@@ -17,21 +18,21 @@ import { ToastrService } from 'ngx-toastr';
   styleUrl: './register.component.scss',
 })
 
-export class RegisterComponent implements OnInit {
+export class RegisterComponent implements OnInit, OnDestroy {
 
   private authService: AuthService = inject(AuthService);
   private readonly fb = inject(FormBuilder);
+  private readonly toastrService: ToastrService = inject(ToastrService)
+  private route: Router = inject(Router)
+
+
   registerForm!: FormGroup
   date: Date | undefined;
-  private readonly toastrService: ToastrService = inject(ToastrService)
-
-  //api variables
-  private route: Router = inject(Router)
   isLoading = signal<boolean>(false)
   errorMsg = signal<string>("");
   errorFlag = signal<boolean>(false);
-
   subscribe: Subscription = new Subscription()
+  baseHost: string = environment.frontUrl
 
 
   ngOnInit(): void {
@@ -39,6 +40,8 @@ export class RegisterComponent implements OnInit {
     this.registerInitForm();
 
   }
+
+
 
   //all data input and validation
   registerInitForm() {
@@ -50,7 +53,8 @@ export class RegisterComponent implements OnInit {
       rePassword: [null, [Validators.required]],
       phone: [null, [Validators.required, Validators.pattern(/^(01)[0125][0-9]{8}$/)]],
       dateOfBirth: [null, [Validators.required]],
-      gender: [null, [Validators.required, Validators.pattern(/^(male|female)$/)]]
+      gender: [null, [Validators.required, Validators.pattern(/^(male|female)$/)]],
+      shareProfileName: [null, [Validators.required, Validators.pattern(/^[a-z0-9]+$/)]]
     }, { validators: this.matchValid });
 
   }
@@ -94,8 +98,9 @@ export class RegisterComponent implements OnInit {
       {
         next: (res) => {
           console.log("register response", res);
+
           if (res.message == "user added") {
-            this.toastrService.success("you can log in now", "user added successfully")
+            this.toastrService.success("You can log in now.", "User registered successfully")
             this.isLoading.set(false);
             this.errorFlag.set(false)
             this.route.navigate(["/login"]);
@@ -103,10 +108,11 @@ export class RegisterComponent implements OnInit {
         },
 
         error: (err) => {
-          this.errorFlag.set(true)
 
-          this.errorMsg.set(err.error.errorMessage);
-          this.toastrService.error(err.error.errorMessage)
+          console.log("register error", err);
+
+          this.errorFlag.set(true)
+          this.errorMsg.set(err.error.errorMessage)
           this.isLoading.set(false);
         },
 
@@ -115,6 +121,15 @@ export class RegisterComponent implements OnInit {
   }
 
 
+  copyLink(link: string) {
+
+    navigator.clipboard.writeText(`${this.baseHost}/public_message/${link}`);
+    this.toastrService.info(`${this.baseHost}/public_message/${link}`, "profile url copied")
+  }
 
 
+  ngOnDestroy(): void {
+    this.subscribe.unsubscribe();
+
+  }
 }

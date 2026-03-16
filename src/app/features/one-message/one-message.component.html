@@ -1,3 +1,6 @@
+<app-navbar [isLogin]="false"></app-navbar>
+
+
 <div class="flex justify-center items-center">
 
     <div
@@ -22,6 +25,7 @@
                         </div>
 
 
+                        @if(flagAuth()){
 
                         <div (click)="removeMessage(message().data._id)" class="inline-flex items-center space-x-1.5">
 
@@ -41,8 +45,7 @@
                             </div>
                         </div>
 
-
-
+                        }
                     </div>
                 </li>
 

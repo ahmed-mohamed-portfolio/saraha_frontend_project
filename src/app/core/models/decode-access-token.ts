@@ -1,3 +1,5 @@
+
+
 export interface DecodeAccessToken {
     id: string;
     firstName: string;
@@ -6,8 +8,4 @@ export interface DecodeAccessToken {
     iat: number;
     exp: number;
     aud: string;
-    iss: string;
 }
-
-
-
