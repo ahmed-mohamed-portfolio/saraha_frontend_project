@@ -4,6 +4,8 @@ import { initFlowbite } from 'flowbite';
 import { NavbarComponent } from "../../shared/components/navbar/navbar.component";
 import { DatePipe, isPlatformBrowser } from '@angular/common';
 import { AuthService } from '../../core/services/api/auth.service';
+import { environment } from '../../../environments/environment.development';
+import { ToastrService } from 'ngx-toastr';
 @Component({
   selector: 'app-settings',
   imports: [DatePipe],
@@ -15,7 +17,7 @@ export class SettingsComponent implements OnInit {
 
   constructor(private flowbiteService: FlowbiteService) { }
   private authService: AuthService = inject(AuthService)
-
+  private toastrService: ToastrService = inject(ToastrService)
   platformId = inject(PLATFORM_ID)
 
   userName: WritableSignal<string> = signal('')
@@ -23,7 +25,9 @@ export class SettingsComponent implements OnInit {
   userEmail: WritableSignal<string> = signal('')
   userPhone: WritableSignal<string> = signal('')
   userBOD: WritableSignal<string> = signal('')
+  userProfileName: WritableSignal<string> = signal('')
 
+  valueInProfileLink: WritableSignal<string> = signal(environment.frontUrl)
 
   ngOnInit(): void {
 
@@ -48,7 +52,7 @@ export class SettingsComponent implements OnInit {
         this.userEmail.set(res.data.email)
         this.userPhone.set(res.data.phone)
         this.userBOD.set(res.data.dateOfBirth)
-
+        this.userProfileName.set(res.data.shareProfileName)
 
       },
       error: (err) => {
@@ -61,5 +65,11 @@ export class SettingsComponent implements OnInit {
 
 
 
+  copyLink() {
+
+    navigator.clipboard.writeText(`${environment.frontUrl}/public_message/${this.userProfileName()}`);
+    this.toastrService.info("you can share link with any one", "profile url coped")
+
+  }
 
 }
