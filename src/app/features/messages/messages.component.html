@@ -11,11 +11,13 @@
                 }@else if (messages().data.length) {
                 @for (message of messages().data; track message._id ;) {
                 <!--??? i need to make it defer or any thing appear when no message  -->
-                <li class="py-4 sm:py-4">
-                    <div class="flex justify-evenly items-center gap-2">
+                <li class="py-4 sm:py-4 ">
+                    <div class="flex justify-evenly items-start gap-2">
+
                         <div class="shrink-0">
                             <img class="w-8 h-8 rounded-full" src="/user-secret.png" alt="Bonnie image">
                         </div>
+
                         <div class="flex-1 min-w-0">
                             <p class="font-medium text-sm break-all ">
                                 {{message.message}}
@@ -66,8 +68,6 @@
                             </div>
                         </div>
 
-
-
                         <div (click)="removeMessage(message._id)" class="inline-flex items-center space-x-1.5">
 
                             <button data-tooltip-target="tooltip-remove-2" type="button"
@@ -85,8 +85,6 @@
                                 <div class="tooltip-arrow" data-popper-arrow></div>
                             </div>
                         </div>
-
-
 
                     </div>
                 </li>
