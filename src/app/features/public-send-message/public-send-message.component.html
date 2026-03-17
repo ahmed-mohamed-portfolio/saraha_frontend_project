@@ -4,7 +4,14 @@
     class="my-24 mx-auto relative bg-neutral-primary-soft max-w-xs w-full p-6 border border-default rounded-base shadow-xs">
 
     <div class="flex flex-col items-center">
+        @if (userDetails()?.data?.profilePicture) {
+
+        <img class="w-24 h-24 mb-6 rounded-full" [src]="userDetails()?.data?.profilePicture" alt="Bonnie image" />
+
+        }@else {
         <img class="w-24 h-24 mb-6 rounded-full" src="/user.png" alt="Bonnie image" />
+
+        }
 
 
         <h1 class="mb-0.5 text-xl font-semibold tracking-tight text-heading">{{userDetails()?.data?.firstName}}

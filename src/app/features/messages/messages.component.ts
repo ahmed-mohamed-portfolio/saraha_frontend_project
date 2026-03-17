@@ -1,8 +1,6 @@
-import { AuthService } from './../../core/services/api/auth.service';
-import { AfterViewInit, Component, inject, OnInit, PLATFORM_ID, signal, WritableSignal } from '@angular/core';
+import { Component, inject, OnInit, PLATFORM_ID, signal, WritableSignal } from '@angular/core';
 import { MessageService } from '../../core/services/api/message.service';
 import { Messages } from '../../core/models/messages';
-import { CookieService } from 'ngx-cookie-service';
 import { isPlatformServer } from '@angular/common';
 import { ToastrService } from 'ngx-toastr';
 import { environment } from '../../../environments/environment.development';
@@ -16,8 +14,6 @@ import { environment } from '../../../environments/environment.development';
 export class MessagesComponent implements OnInit {
 
   private readonly messageService: MessageService = inject(MessageService)
-  private authService: AuthService = inject(AuthService)
-  private cookieService: CookieService = inject(CookieService)
   private toastrService: ToastrService = inject(ToastrService)
   private platformId = inject(PLATFORM_ID)
   messages: WritableSignal<Messages> = signal({} as Messages);

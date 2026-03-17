@@ -26,6 +26,7 @@ export class SettingsComponent implements OnInit {
   userPhone: WritableSignal<string> = signal('')
   userBOD: WritableSignal<string> = signal('')
   userProfileName: WritableSignal<string> = signal('')
+  userProfileImage: WritableSignal<string> = signal('')
 
   valueInProfileLink: WritableSignal<string> = signal(environment.frontUrl)
 
@@ -53,7 +54,7 @@ export class SettingsComponent implements OnInit {
         this.userPhone.set(res.data.phone)
         this.userBOD.set(res.data.dateOfBirth)
         this.userProfileName.set(res.data.shareProfileName)
-
+        this.userProfileImage.set(res.data.profilePicture)
       },
       error: (err) => {
         console.log(err);

@@ -1,5 +1,6 @@
 
 
+
 interface UserDetails {
     status: number;
     message: string;
@@ -14,15 +15,7 @@ interface Data {
     phone: string;
     dateOfBirth: string;
     gender: string;
-    provider: string;
-    role: string;
     shareProfileName: string;
+    profilePicture: string;
     __v: number;
 }
-
-
-
-
-
-
-

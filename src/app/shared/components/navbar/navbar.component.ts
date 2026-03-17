@@ -30,6 +30,8 @@ export class NavbarComponent implements OnInit {
   userName: WritableSignal<string> = signal('')
   lastName: WritableSignal<string> = signal('')
   userEmail: WritableSignal<string> = signal('')
+  userProfileImage: WritableSignal<string> = signal('')
+
   platformId = inject(PLATFORM_ID)
 
 
@@ -67,7 +69,7 @@ export class NavbarComponent implements OnInit {
         this.userEmail.set(res.data.email)
 
         this.userName.set(res.data.firstName + ' ' + res.data.lastName)
-
+        this.userProfileImage.set(res.data.profilePicture)
         console.log("GET user by id", res);
 
       },
