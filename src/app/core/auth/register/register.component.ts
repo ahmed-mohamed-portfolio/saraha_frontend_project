@@ -98,7 +98,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
 
       const formData = new FormData()
 
-      formData.append('message', JSON.stringify(this.registerForm.value))
+      formData.append('registerForm', JSON.stringify(this.registerForm.value))
 
       let file = this.saveFile()
 

@@ -25,7 +25,6 @@ export class AuthService {
 
 
   signUp(data: FormData): Observable<RegisterRes> {
-    console.log("data", data.values());
 
     return this.http.post<RegisterRes>(environment.baseUrl + '/auth/signup', data);
   }
