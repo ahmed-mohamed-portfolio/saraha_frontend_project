@@ -21,7 +21,7 @@
             <label for="profileName" class="block mb-2.5 text-sm font-medium text-heading">profile share link
                 name</label>
             <input type="text" id="profileName" formControlName="shareProfileName"
-                class="bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focus:ring-brand focus:border-brand block w-full px-3 py-2.5 shadow-xs placeholder:text-body"
+                class="bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focus:ring-brand focus:border-brand block w-full px-3 py-2.5 shadow-xs placeholder-gray-300"
                 placeholder="ahmed-mohamed-connect" required />
 
 
@@ -152,6 +152,17 @@
             <span class="font-medium">Error:</span> Please choose a valid date (e.g., 7-10-1994).
         </div>
         }
+
+
+
+        <!-- Image -->
+
+        <label class="block mb-2.5 text-sm font-medium text-heading" for="file_input">Upload Photo</label>
+        <input (change)="changeImage($event)"
+            class="cursor-pointer bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focus:ring-brand focus:border-brand block w-full shadow-xs placeholder:text-body"
+            id="file_input" type="file">
+
+
 
         <!-- gender input -->
         <div class="mb-4 mt-4 flex justify-start items-baseline">

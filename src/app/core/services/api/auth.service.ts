@@ -24,7 +24,9 @@ export class AuthService {
   private readonly toastrService: ToastrService = inject(ToastrService)
 
 
-  signUp(data: Register): Observable<RegisterRes> {
+  signUp(data: FormData): Observable<RegisterRes> {
+    console.log("data", data.values());
+
     return this.http.post<RegisterRes>(environment.baseUrl + '/auth/signup', data);
   }
 

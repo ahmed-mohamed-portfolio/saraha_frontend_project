@@ -1,4 +1,4 @@
-import { Component, inject, OnDestroy, OnInit, signal } from '@angular/core';
+import { Component, inject, OnDestroy, OnInit, signal, WritableSignal } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 import { InputComponent } from "../../../shared/components/input/input.component";
@@ -33,6 +33,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
   errorFlag = signal<boolean>(false);
   subscribe: Subscription = new Subscription()
   baseHost: string = environment.frontUrl
+  saveFile: WritableSignal<File | null> = signal(null)
 
 
   ngOnInit(): void {
@@ -75,12 +76,37 @@ export class RegisterComponent implements OnInit, OnDestroy {
   }
 
 
+
+  changeImage(e: Event) {
+
+    let input = e.target as HTMLInputElement
+
+    if (input.files && input.files.length > 0) {
+
+      this.saveFile.set(input.files[0])
+
+    }
+
+  }
+
+
+
   //when press submit
   regsterSubmit() {
 
     if (this.registerForm.valid) {
 
-      this.register();
+      const formData = new FormData()
+
+      formData.append('message', JSON.stringify(this.registerForm.value))
+
+      let file = this.saveFile()
+
+      if (file) {
+        formData.append('image', file, file.name)
+      }
+
+      this.register(formData);
 
     } else {
       this.registerForm.markAllAsTouched()
@@ -90,11 +116,11 @@ export class RegisterComponent implements OnInit, OnDestroy {
 
 
   // send login data to api and loader
-  register() {
+  register(formData: FormData) {
 
     this.subscribe.unsubscribe();
     this.isLoading.set(true);
-    this.subscribe = this.authService.signUp(this.registerForm.value).subscribe(
+    this.subscribe = this.authService.signUp(formData).subscribe(
       {
         next: (res) => {
           console.log("register response", res);
