@@ -92,4 +92,15 @@ export class AuthService {
   }
 
 
+
+  updateUserInfos(data: FormData): Observable<RegisterRes> {
+
+    return this.http.put<RegisterRes>(environment.baseUrl + '/user/update-user', data);
+  }
+
+
+  deleteAccount(): Observable<RegisterRes> {
+
+    return this.http.delete<RegisterRes>(environment.baseUrl + '/user/delete-profile');
+  }
 }

@@ -1,5 +1,38 @@
+@if(!editFlag()){
+
+
+@if(!isLoadingProfileData()){
+
+
 <div
     class="my-24 mx-auto relative bg-neutral-primary-soft max-w-xs w-full p-6 border border-default rounded-base shadow-xs">
+
+
+    <button id="dropdownButton" data-dropdown-toggle="dropdown"
+        class="cursor-pointer absolute top-2 inset-e-2 text-body hover:text-heading bg-neutral-primary-soft box-border border border-transparent hover:bg-neutral-tertiary focus:ring-4 focus:ring-neutral-tertiary rounded-base p-1.5 focus:outline-none"
+        type="button">
+        <span class="sr-only">Open dropdown</span>
+        <svg class="w-6 h-6" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none"
+            viewBox="0 0 24 24">
+            <path stroke="currentColor" stroke-linecap="round" stroke-width="3" d="M6 12h.01m6 0h.01m5.99 0h.01" />
+        </svg>
+    </button>
+    <!-- Dropdown menu -->
+    <div id="dropdown"
+        class="z-10 bg-neutral-primary-medium border border-default-medium rounded-base shadow-lg w-36 block hidden">
+        <ul class="p-2 text-sm text-body font-medium" aria-labelledby="dropdownButton">
+            <li (click)="editApply()">
+                <a
+                    class="cursor-pointer inline-flex items-center w-full p-2 hover:bg-neutral-tertiary-medium hover:text-heading rounded-md">Edit</a>
+            </li>
+
+            <li>
+                <a data-modal-target="popup-modal" data-modal-toggle="popup-modal"
+                    class="cursor-pointer inline-flex items-center w-full p-2 text-fg-danger hover:bg-neutral-tertiary-medium rounded-md">Delete</a>
+            </li>
+        </ul>
+    </div>
+
 
     <div class="flex flex-col items-center">
 
@@ -24,13 +57,28 @@
 
             <div class="flex mt-0.5">
                 <i class="fa-solid fa-phone me-1"></i>
+                @if (userPhone()) {
                 <span class="text-sm text-body">{{userPhone()}}</span>
+
+                }@else {
+
+                <span class="text-sm text-body"> not detected</span>
+
+                }
             </div>
 
 
             <div class="flex mt-0.5">
                 <i class="fa-solid fa-cake-candles me-1"></i>
+
+                @if (userBOD()) {
                 <span class="text-sm text-body">{{userBOD() | date:'dd/MM/yyyy'}}</span>
+
+                }@else {
+
+                <span class="text-sm text-body"> not detected</span>
+
+                }
             </div>
 
 
@@ -58,7 +106,7 @@
                 <!-- Button -->
                 <button (click)="copyLink()" data-tooltip-target="tooltip-website-url"
                     data-copy-to-clipboard-target="website-url" type="button"
-                    class="shrink-0 z-10 inline-flex items-center justify-center text-white bg-brand hover:bg-brand-strong focus:ring-4 focus:ring-brand-medium font-medium rounded-e-base text-sm px-4 py-2.5 focus:outline-none border border-brand border-s-0">
+                    class="cursor-pointer shrink-0 z-10 inline-flex items-center justify-center text-white bg-brand hover:bg-brand-strong focus:ring-4 focus:ring-brand-medium font-medium rounded-e-base text-sm px-4 py-2.5 focus:outline-none border border-brand border-s-0">
                     <span id="default-icon">
                         <svg class="w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
                             viewBox="0 0 24 24">
@@ -86,6 +134,287 @@
         </div>
 
 
-
     </div>
 </div>
+
+
+
+
+}@else {
+
+
+
+<!-- ----------------------------   skilaton -->
+<app-skilaton></app-skilaton>
+}
+<!-- ----------------  warning to delete ------------------------ -->
+
+
+
+<div id="popup-modal" tabindex="-1"
+    class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
+    <div class="relative p-4 w-full max-w-md max-h-full">
+        <div class="relative bg-neutral-primary-soft border border-default rounded-base shadow-sm p-4 md:p-6">
+            <button type="button"
+                class="cursor-pointer absolute top-3 end-2.5 text-body bg-transparent hover:bg-neutral-tertiary hover:text-heading rounded-base text-sm w-9 h-9 ms-auto inline-flex justify-center items-center"
+                data-modal-hide="popup-modal">
+                <svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                    fill="none" viewBox="0 0 24 24">
+                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M6 18 17.94 6M18 18 6.06 6" />
+                </svg>
+                <span class="sr-only">Close modal</span>
+            </button>
+            <div class="p-4 md:p-5 text-center">
+                <svg class="mx-auto mb-4 text-fg-disabled w-12 h-12" aria-hidden="true"
+                    xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M12 13V8m0 8h.01M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+                </svg>
+                <h3 class="mb-6 text-body">Are you sure you want to delete this account ?</h3>
+                <div class="flex items-center space-x-4 justify-center">
+                    <button (click)="deleteAccount()" data-modal-hide="popup-modal" type="button"
+                        class="cursor-pointer text-white bg-danger box-border border border-transparent hover:bg-danger-strong focus:ring-4 focus:ring-danger-medium shadow-xs font-medium leading-5 rounded-base text-sm px-4 py-2.5 focus:outline-none">
+                        Yes, I'm sure
+                    </button>
+                    <button data-modal-hide="popup-modal" type="button"
+                        class="cursor-pointer text-body bg-neutral-secondary-medium box-border border border-default-medium hover:bg-neutral-tertiary-medium hover:text-heading focus:ring-4 focus:ring-neutral-tertiary shadow-xs font-medium leading-5 rounded-base text-sm px-4 py-2.5 focus:outline-none">No,
+                        cancel</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+}@else {
+
+<!--   ----------------------   update data --------------------- -->
+
+
+<section class=" mt-20 mb-5 flex justify-center items-center dark:bg-gray-500 sm:my-15  md:py-10">
+
+
+    <form [formGroup]="registerForm" (ngSubmit)="regsterSubmit()"
+        class=" w-[85%] max-w-80  py-5 p-2  md:w-[60%]  lg:w-[80%] lg:max-w-96 xl:max-w-lg ">
+
+        <app-alert-message></app-alert-message>
+
+        @if(errorFlag()){
+        <div class="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" role="alert">
+            <span class="font-medium">Error:</span> {{errorMsg()}}
+        </div>
+        }
+
+        <!-- first name input -->
+        <app-input [control]="registerForm.get('firstName')" [typeInput]="'text'" [idInput]="'firstName'"
+            [placeHolder]="'ahmed'" [labelInput]="'First Name'"></app-input>
+
+        <!-- last name input -->
+        <app-input [control]="registerForm.get('lastName')" [typeInput]="'text'" [idInput]="'lastName'"
+            [placeHolder]="'mohamed'" [labelInput]="'Last Name'"></app-input>
+
+
+        <!-- shareProfileName input -->
+        <div class="mb-6">
+            <label for="profileName" class="block mb-2.5 text-sm font-medium text-heading">profile share link
+                name</label>
+            <input type="text" id="profileName" formControlName="shareProfileName"
+                class="bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focus:ring-brand focus:border-brand block w-full px-3 py-2.5 shadow-xs placeholder-gray-300"
+                placeholder="ahmed-mohamed-connect" required />
+
+
+            @if(registerForm.get('shareProfileName')?.value ){
+
+
+            <div class="flex justify-center items-start">
+
+
+
+                <div class="inline-flex items-center space-x-1.5">
+
+                    <button data-tooltip-target="tooltip-remove-3" type="button"
+                        (click)="copyLinkFromForm(registerForm.get('shareProfileName')?.value)"
+                        class="mx-0 cursor-pointer inline-flex items-center justify-center text-fg-danger bg-transparent box-border border border-transparent hover:bg-neutral-secondary-medium focus:ring-4 focus:ring-neutral-tertiary font-medium leading-5 rounded-base h-9 w-9 focus:outline-none">
+                        <svg class="w-5 h-5" fill="#000000" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg"
+                            xmlns:xlink="http://www.w3.org/1999/xlink" width="800px" height="800px"
+                            viewBox="0 0 425.466 425.467" xml:space="preserve">
+                            <g>
+                                <g>
+                                    <g>
+                                        <path d="M318.15,230.195l77.934-77.937c31.894-31.892,31.894-83.782-0.004-115.674l-12.66-12.66
+				c-31.893-31.896-83.78-31.896-115.674-0.004l-77.937,77.934c-17.588,17.588-25.457,41.264-23.646,64.311
+				c-23.045-1.813-46.722,6.056-64.308,23.647L23.92,267.748c-31.894,31.889-31.894,83.779,0,115.674l12.664,12.662
+				c31.893,31.893,83.783,31.893,115.674,0l77.935-77.936c17.592-17.59,25.459-41.266,23.647-64.309
+				C276.884,255.654,300.56,247.783,318.15,230.195z M202.653,290.605l-77.936,77.938c-16.705,16.703-43.889,16.703-60.59,0
+				l-12.666-12.666c-16.705-16.701-16.703-43.885,0-60.594l77.936-77.932c14.14-14.141,35.779-16.306,52.226-6.516l-32.302,32.307
+				c-7.606,7.604-7.606,19.938,0,27.541c7.605,7.607,19.937,7.607,27.541,0l32.306-32.303
+				C218.959,254.828,216.795,276.469,202.653,290.605z M238.382,209.169l32.299-32.306c7.608-7.602,7.608-19.935,0-27.538
+				c-7.604-7.61-19.936-7.61-27.541-0.004l-32.303,32.303c-9.791-16.446-7.627-38.087,6.514-52.226l77.935-77.935
+				c16.707-16.707,43.89-16.707,60.594,0l12.664,12.664c16.705,16.705,16.705,43.886,0,60.591l-77.936,77.937
+				C276.468,216.797,254.828,218.959,238.382,209.169z" />
+                                        <path d="M343.466,261.465c-45.287,0-82,36.713-82,82s36.713,82,82,82c45.286,0,82-36.713,82-82S388.753,261.465,343.466,261.465z
+				 M372.505,333.564l-56.046,56.104c-0.239,0.238-0.536,0.41-0.862,0.496l-22.315,5.85c-0.649,0.168-1.347-0.02-1.822-0.494
+				c-0.477-0.479-0.666-1.172-0.496-1.824l5.826-22.318c0.084-0.326,0.256-0.627,0.494-0.863l56.047-56.104
+				c0.742-0.742,1.945-0.744,2.688-0.002l4.548,4.541c0.739,0.74,0.741,1.943,0,2.688l-37.433,37.471l4.709,4.703l37.435-37.471
+				c0.739-0.742,1.94-0.742,2.682-0.002l4.55,4.541C373.25,331.617,373.25,332.822,372.505,333.564z M395.472,310.574l-17,17.018
+				c-0.739,0.744-1.942,0.744-2.685,0.002l-16.489-16.475c-0.744-0.74-0.744-1.943-0.002-2.688l17-17.02
+				c0.741-0.74,1.944-0.74,2.688-0.002l16.487,16.477C396.216,308.629,396.216,309.832,395.472,310.574z" />
+                                    </g>
+                                </g>
+                            </g>
+                        </svg>
+                    </button>
+                    <div id="tooltip-remove-3" role="tooltip"
+                        class="absolute z-10 invisible inline-block px-3 py-2 text-sm leading-4 font-medium text-white transition-opacity duration-300 bg-dark rounded-base shadow-xs force:opacity-0 tooltip">
+                        Remove
+                        <div class="tooltip-arrow" data-popper-arrow></div>
+                    </div>
+                </div>
+
+
+
+
+
+
+
+                <p class="text-[15px] mb-3.5 break-all w-full">
+                    {{baseHost}}/public_message/{{registerForm.get('shareProfileName')?.value}}</p>
+
+            </div>
+
+            }
+
+
+            @if ( registerForm.get('shareProfileName')?.touched &&
+            registerForm.get('shareProfileName')?.errors?.['required'])
+            {
+            <div class="mt-0.5 p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400"
+                role="alert">
+                <span class="font-medium">Error:</span> write your profile link name
+            </div>
+            }
+
+            @if(registerForm.get('shareProfileName')?.errors?.['pattern']){
+            <div class="mt-0.5 p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400"
+                role="alert">
+                <span class="font-medium">Error:</span> Profile name must contain only lowercase letters and numbers.
+            </div>
+            }
+
+        </div>
+
+
+
+
+
+
+        <!-- email input -->
+        <app-input [control]="registerForm.get('email')" [typeInput]="'email'" [idInput]="'email'"
+            [placeHolder]="'ahmed.mohamed@gmail.com'" [labelInput]="'Email address'"></app-input>
+
+
+        <!-- password input -->
+        <app-input [control]="registerForm.get('password')" [idInput]="'password'" [placeHolder]="'•••••••••'"
+            [labelInput]="'new Password'">
+
+            assword must be at least 8 characters, include uppercase,
+            lowercase, number, and special character.
+        </app-input>
+
+
+        <!-- repassword input -->
+        <app-input [control]="registerForm.get('rePassword')" [idInput]="'rePassword'" [placeHolder]="'•••••••••'"
+            [labelInput]="'confirm new Password'">
+        </app-input>
+
+
+
+        <!-- phone input -->
+        <app-input [control]="registerForm.get('phone')" [typeInput]="'tel'" [idInput]="'phone'"
+            [placeHolder]="'01003003608'" [labelInput]="'Phone Number'">
+
+            Please enter a valid Egyptian phone number (e.g., 01012345678).
+        </app-input>
+
+
+
+        <!-- ? ngSkipHydration    i dont understand what that mean and what its effect-->
+        <!-- date input -->
+        <label for="date" class="text-sm text-gray-900 font-medium">Date of birth</label>
+        <p-datepicker class="w-full" ngSkipHydration inputId="date" [showIcon]="true" dateFormat="dd-mm-yy"
+            placeholder="7-10-1994" formControlName="dateOfBirth" />
+
+        @if(registerForm.get("dateOfBirth")?.touched && registerForm.get("dateOfBirth")?.invalid){
+        <div class="mt-0.5 p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400"
+            role="alert">
+            <span class="font-medium">Error:</span> Please choose a valid date (e.g., 7-10-1994).
+        </div>
+        }
+
+
+
+        <!-- Image -->
+
+        <label class="block mb-2.5 text-sm font-medium text-heading" for="file_input">Upload Photo</label>
+        <input (change)="changeImage($event)"
+            class="cursor-pointer bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focus:ring-brand focus:border-brand block w-full shadow-xs placeholder:text-body"
+            id="file_input" type="file">
+
+
+
+        <!-- gender input -->
+        <div class="mb-4 mt-4 flex justify-start items-baseline">
+            <label class="block text-sm font-medium text-gray-900 dark:text-gray-100  me-7">
+                Gender
+            </label>
+
+            <div class="card flex justify-start">
+                <div class="flex flex-wrap gap-4">
+                    <div class="flex items-center">
+                        <p-radiobutton name="Gender" value="male" formControlName="gender" inputId="gender1" />
+                        <label for="gender1" class="ml-2">male</label>
+                    </div>
+
+                    <div class="flex items-center">
+                        <p-radiobutton name="Gender" value="female" formControlName="gender" inputId="gender2" />
+                        <label for="gender12" class="ml-2">female</label>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        @if ( registerForm.get('gender')?.touched && registerForm.get('gender')?.invalid)
+        {
+        <div class="mt-0.5 p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400"
+            role="alert">
+            <span class="font-medium">Error:</span> Please choose an gender.
+        </div>
+        }
+
+
+        <div class="w-full flex justify-center">
+            <button type="submit"
+                class="mx-auto mt-5 cursor-pointer  text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full lg:w-[50%] xl:w-[60%]  px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Update
+                @if(isLoading()==true){ <i class="fa-solid fa-sync fa-spin"></i>}
+            </button>
+        </div>
+
+
+
+
+
+
+    </form>
+
+
+
+
+
+</section>
+
+
+
+
+}

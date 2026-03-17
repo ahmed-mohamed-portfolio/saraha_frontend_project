@@ -26,13 +26,27 @@
 
             <div class="flex mt-0.5">
                 <i class="fa-solid fa-phone me-1"></i>
+                @if(userDetails()?.data?.phone){
                 <span class="text-sm text-body">{{userDetails()?.data?.phone}}</span>
+
+                }@else{
+                <span class="text-sm text-body">not detected</span>
+
+                }
             </div>
 
 
             <div class="flex mt-0.5">
                 <i class="fa-solid fa-cake-candles me-1"></i>
                 <span class="text-sm text-body">{{userDetails()?.data?.dateOfBirth | date:'dd/MM/yyyy'}}</span>
+
+                @if(userDetails()?.data?.dateOfBirth){
+                <span class="text-sm text-body">{{userDetails()?.data?.dateOfBirth | date:'dd/MM/yyyy'}}</span>
+
+                }@else{
+                <span class="text-sm text-body">not detected</span>
+
+                }
             </div>
 
 
