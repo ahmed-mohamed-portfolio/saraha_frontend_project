@@ -6,9 +6,6 @@ import { Router, RouterLink, RouterLinkActive } from "@angular/router";
 import { CookieService } from 'ngx-cookie-service';
 import { ToastrService } from 'ngx-toastr';
 import { isPlatformBrowser } from '@angular/common';
-import { jwtDecode } from 'jwt-decode';
-import { DecodeAccessToken } from '../../../core/models/decode-access-token';
-
 
 @Component({
   selector: 'app-navbar',
