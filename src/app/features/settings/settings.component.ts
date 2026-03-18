@@ -56,7 +56,7 @@ export class SettingsComponent implements OnInit, OnDestroy {
   baseHost: string = environment.frontUrl
   saveFile: WritableSignal<File | null> = signal(null)
   isLoadingProfileData: WritableSignal<boolean> = signal(true);
-
+  closeBoxFlag: WritableSignal<boolean> = signal(false);
 
 
   ngOnInit(): void {
@@ -249,6 +249,15 @@ export class SettingsComponent implements OnInit, OnDestroy {
 
     navigator.clipboard.writeText(`${this.baseHost}/public_message/${link}`);
     this.toastrService.info(`${this.baseHost}/public_message/${link}`, "profile url copied")
+  }
+
+  closeBox() {
+    this.closeBoxFlag.set(true)
+    this.flowbite()
+    console.log(
+      this.closeBoxFlag()
+    );
+
   }
 
   deleteAccount() {

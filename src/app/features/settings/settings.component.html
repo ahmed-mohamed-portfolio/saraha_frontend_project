@@ -8,7 +8,7 @@
     class="my-24 mx-auto relative bg-neutral-primary-soft max-w-xs w-full p-6 border border-default rounded-base shadow-xs">
 
 
-    <button id="dropdownButton" data-dropdown-toggle="dropdown"
+    <button (click)="closeBox()" id="dropdownButton" data-dropdown-toggle="dropdown"
         class="cursor-pointer absolute top-2 inset-e-2 text-body hover:text-heading bg-neutral-primary-soft box-border border border-transparent hover:bg-neutral-tertiary focus:ring-4 focus:ring-neutral-tertiary rounded-base p-1.5 focus:outline-none"
         type="button">
         <span class="sr-only">Open dropdown</span>
@@ -149,6 +149,8 @@
 }
 <!-- ----------------  warning to delete ------------------------ -->
 
+@if(closeBoxFlag()){
+
 
 
 <div id="popup-modal" tabindex="-1"
@@ -186,7 +188,7 @@
     </div>
 </div>
 
-
+}
 }@else {
 
 <!--   ----------------------   update data --------------------- -->
