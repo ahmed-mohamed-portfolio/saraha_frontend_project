@@ -35,13 +35,42 @@ export class AuthService {
   }
 
 
+
+
   signOut() {
+
+    this.logOutFromAllDevices().subscribe({
+      next: (res) => {
+        console.log(res);
+
+
+      },
+      error: (err) => {
+        console.log(err);
+
+
+      }
+    })
+
+
+
+
+    this.router.navigate(['/login'])
     this.cookieService.delete('accessToken')
     this.cookieService.delete('refreshToken')
 
-    this.router.navigate(['/login'])
+
     this.toastrService.info("You have successfully logged out.", "Logout Successful")
   }
+
+
+
+  logOutFromAllDevices(): Observable<any> {
+    return this.http.patch(environment.baseUrl + '/auth/logout-from-all-devices', {})
+  }
+
+
+
 
 
 

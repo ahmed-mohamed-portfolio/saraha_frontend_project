@@ -272,6 +272,12 @@ export class SettingsComponent implements OnInit, OnDestroy {
       }
     })
   }
+
+
+  logOUtFromAllDevices() {
+    this.authService.signOut()
+  }
+
   ngOnDestroy(): void {
     this.subscribe.unsubscribe();
 
