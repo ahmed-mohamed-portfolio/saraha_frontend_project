@@ -5,6 +5,7 @@ import { FlowbiteService } from '../../core/services/flowbite.service';
 import { FormBuilder, FormGroup, Validators, ɵInternalFormsSharedModule, ReactiveFormsModule } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import { Router } from '@angular/router';
+import { VerifyEmailReq } from '../../core/models/verify-email-req';
 
 @Component({
   selector: 'app-verification-code',
@@ -80,7 +81,7 @@ export class VerificationCodeComponent implements OnInit {
       next: (res) => {
         console.log(res);
         if (res.data.isVerfied) {
-          this.toastrService.success("sign in now", "email verified");
+          this.toastrService.success("email verified");
           this.route.navigate(["/login"]);
         }
       },

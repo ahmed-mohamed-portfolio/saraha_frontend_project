@@ -13,6 +13,9 @@ import { jwtDecode } from 'jwt-decode';
 import { DecodeAccessToken } from '../../models/decode-access-token';
 import { UserDetails } from '../../models/user-details';
 import { VerifyRes } from '../../models/verify-res';
+import { UserSendEmail } from '../../models/user-send-email';
+import { SentEmailRes } from '../../models/sent-email-res';
+import { VerifyEmailReq } from '../../models/verify-email-req';
 
 @Injectable({
   providedIn: 'root',
@@ -148,11 +151,11 @@ export class AuthService {
     return this.http.delete<RegisterRes>(environment.baseUrl + '/user/delete-profile');
   }
 
-  verifyEmail(data: any): Observable<VerifyRes> {
+  verifyEmail(data: VerifyEmailReq): Observable<VerifyRes> {
     return this.http.post<VerifyRes>(environment.baseUrl + '/auth/verify', data)
   }
 
-  sentVerificationEmail(data: any): Observable<any> {
-    return this.http.post(environment.baseUrl + '/auth/sendVerificationEmail', data)
+  sentVerificationEmail(data: UserSendEmail): Observable<SentEmailRes> {
+    return this.http.post<SentEmailRes>(environment.baseUrl + '/auth/sendVerificationEmail', data)
   }
 }
