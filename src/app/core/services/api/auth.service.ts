@@ -37,20 +37,48 @@ export class AuthService {
 
 
 
-  signOut() {
+  signOut(flag: string) {
 
-    this.logOutFromAllDevices().subscribe({
-      next: (res) => {
-        console.log(res);
+    switch (flag) {
+      case "all":
 
-
-      },
-      error: (err) => {
-        console.log(err);
+        this.logOutFromAllDevices().subscribe({
+          next: (res) => {
+            console.log(res);
 
 
-      }
-    })
+          },
+          error: (err) => {
+            console.log(err);
+
+
+          }
+        })
+
+        break;
+
+
+      case "one":
+
+        this.logOutFromTHisDevice().subscribe({
+          next: (res) => {
+            console.log(res);
+
+          },
+          error: (err) => {
+            console.log(err);
+
+
+          }
+        })
+
+        break;
+
+      default:
+        console.log("problem in sifn out");
+
+        break;
+    }
 
 
 
@@ -69,6 +97,9 @@ export class AuthService {
     return this.http.patch(environment.baseUrl + '/auth/logout-from-all-devices', {})
   }
 
+  logOutFromTHisDevice(): Observable<any> {
+    return this.http.post(environment.baseUrl + '/auth/logout', {})
+  }
 
 
 
@@ -115,7 +146,7 @@ export class AuthService {
     try {
       return jwtDecode<DecodeAccessToken>(token);
     } catch (error) {
-      this.signOut();
+      this.signOut("all");
       return null;
     }
   }

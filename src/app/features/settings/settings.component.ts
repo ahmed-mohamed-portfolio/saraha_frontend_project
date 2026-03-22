@@ -264,7 +264,7 @@ export class SettingsComponent implements OnInit, OnDestroy {
     this.authService.deleteAccount().subscribe({
       next: (res) => {
         console.log(res);
-        this.authService.signOut()
+        this.authService.signOut("all")
       },
       error: (err) => {
         console.log(err);
@@ -275,7 +275,7 @@ export class SettingsComponent implements OnInit, OnDestroy {
 
 
   logOUtFromAllDevices() {
-    this.authService.signOut()
+    this.authService.signOut("all")
   }
 
   ngOnDestroy(): void {

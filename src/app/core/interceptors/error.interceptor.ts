@@ -18,7 +18,10 @@ export const errorInterceptor: HttpInterceptorFn = (req, next) => {
       //* i need to study switchMap well .. 
       if (
         err.error?.errorMessage === 'jwt expired' &&
-        !req.url.includes('/auth/generate-access-token')
+        !req.url.includes('/auth/generate-access-token') &&
+        !req.url.includes('/auth/logout') &&
+        !req.url.includes('/logout-from-all-devices')
+
       ) {
         return authService.generateAccessTokenByRefreshToken().pipe(
           switchMap((res) => {
@@ -35,7 +38,7 @@ export const errorInterceptor: HttpInterceptorFn = (req, next) => {
           catchError((refreshErr) => {
             toastrService.error('The session takes a period of time');
             //* there is error 'invalid algorism ' when refresh token expired , i need to delete it
-            authService.signOut()
+            authService.signOut("all")
             return throwError(() => refreshErr);
           })
         );
@@ -43,7 +46,7 @@ export const errorInterceptor: HttpInterceptorFn = (req, next) => {
 
 
 
-      if (err.error?.errorMessage) {
+      if (err.error?.errorMessage && err.error?.errorMessage !== 'jwt expired') {
         toastrService.error(err.error.errorMessage);
       }
 
