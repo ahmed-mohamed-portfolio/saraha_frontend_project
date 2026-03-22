@@ -1,6 +1,4 @@
 
-
-
 export interface UserDetails {
     status: number;
     message: string;
@@ -15,7 +13,11 @@ interface Data {
     phone: string;
     dateOfBirth: string;
     gender: string;
+    provider: string;
+    role: string;
     shareProfileName: string;
     profilePicture: string;
+    isVerfied: boolean;
+    credentialsUpdatedAt: string;
     __v: number;
 }

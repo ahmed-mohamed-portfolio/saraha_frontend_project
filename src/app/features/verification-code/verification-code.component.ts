@@ -1,5 +1,5 @@
 import { AuthService } from './../../core/services/api/auth.service';
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject, input, OnInit } from '@angular/core';
 import { initFlowbite } from 'flowbite';
 import { FlowbiteService } from '../../core/services/flowbite.service';
 import { FormBuilder, FormGroup, Validators, ɵInternalFormsSharedModule, ReactiveFormsModule } from '@angular/forms';
@@ -17,10 +17,12 @@ export class VerificationCodeComponent implements OnInit {
   constructor(private flowbiteService: FlowbiteService) { }
   private authService: AuthService = inject(AuthService)
   private toastrService: ToastrService = inject(ToastrService)
-  codeForm!: FormGroup
   private readonly fb = inject(FormBuilder);
   private route: Router = inject(Router)
+  email = input<string>('');
 
+
+  codeForm!: FormGroup
   code: string = ""
 
   ngOnInit(): void {
@@ -30,6 +32,9 @@ export class VerificationCodeComponent implements OnInit {
 
 
     this.registerInitForm();
+
+    console.log("email", this.email());
+
 
   }
 
@@ -65,10 +70,10 @@ export class VerificationCodeComponent implements OnInit {
 
 
   register() {
-    let userEmail = sessionStorage.getItem('email')
+
     this.code = `${this.codeForm.value.codePart1}${this.codeForm.value.codePart2}${this.codeForm.value.codePart3}${this.codeForm.value.codePart4}`
     let data = {
-      email: userEmail,
+      email: this.email() ? this.email() : sessionStorage.getItem('email'),
       code: this.code
     }
     this.authService.verifyEmail(data).subscribe({

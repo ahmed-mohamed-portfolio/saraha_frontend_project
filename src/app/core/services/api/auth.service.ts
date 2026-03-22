@@ -3,7 +3,6 @@ import { inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from '../../../../environments/environment.development';
 import { RegisterRes } from '../../models/register-res';
-import { Register } from '../../models/register';
 import { LoginRes } from '../../models/login-res';
 import { Login } from '../../models/login';
 import { CookieService } from 'ngx-cookie-service';
@@ -19,6 +18,7 @@ import { VerifyRes } from '../../models/verify-res';
   providedIn: 'root',
 })
 export class AuthService {
+
   private readonly cookieService: CookieService = inject(CookieService)
   private readonly http: HttpClient = inject(HttpClient)
   private readonly router: Router = inject(Router)
@@ -30,13 +30,9 @@ export class AuthService {
     return this.http.post<RegisterRes>(environment.baseUrl + '/auth/signup', data);
   }
 
-
   login(data: Login): Observable<LoginRes> {
     return this.http.post<LoginRes>(environment.baseUrl + '/auth/login', data);
   }
-
-
-
 
   signOut(flag: string) {
 
@@ -92,8 +88,6 @@ export class AuthService {
     this.toastrService.info("You have successfully logged out.", "Logout Successful")
   }
 
-
-
   logOutFromAllDevices(): Observable<any> {
     return this.http.patch(environment.baseUrl + '/auth/logout-from-all-devices', {})
   }
@@ -101,10 +95,6 @@ export class AuthService {
   logOutFromTHisDevice(): Observable<any> {
     return this.http.post(environment.baseUrl + '/auth/logout', {})
   }
-
-
-
-
 
   googleLogin(idToken: string): Observable<LoginResByGmail> {
 
@@ -114,13 +104,11 @@ export class AuthService {
 
   }
 
-
   getUserById(): Observable<UserDetails> {
 
     return this.http.get<UserDetails>(environment.baseUrl + '/auth/get-user-by-id');
 
   }
-
 
   generateAccessTokenByRefreshToken(): Observable<NewToken> {
 
@@ -134,8 +122,6 @@ export class AuthService {
     return this.http.get<NewToken>(environment.baseUrl + '/auth/generate-access-token', { headers });
 
   }
-
-
 
   decodeToken(): DecodeAccessToken | null {
     const token = this.cookieService.get('accessToken');
@@ -152,22 +138,21 @@ export class AuthService {
     }
   }
 
-
-
   updateUserInfos(data: FormData): Observable<RegisterRes> {
 
     return this.http.put<RegisterRes>(environment.baseUrl + '/user/update-user', data);
   }
-
 
   deleteAccount(): Observable<RegisterRes> {
 
     return this.http.delete<RegisterRes>(environment.baseUrl + '/user/delete-profile');
   }
 
-
-
   verifyEmail(data: any): Observable<VerifyRes> {
     return this.http.post<VerifyRes>(environment.baseUrl + '/auth/verify', data)
+  }
+
+  sentVerificationEmail(data: any): Observable<any> {
+    return this.http.post(environment.baseUrl + '/auth/sendVerificationEmail', data)
   }
 }

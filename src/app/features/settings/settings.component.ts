@@ -15,13 +15,14 @@ import { FormsModule } from '@angular/forms';
 import { InputComponent } from '../../shared/components/input/input.component';
 import { SkilatonComponent } from "../../shared/components/skilaton/skilaton.component";
 import { AlertMessageComponent } from "../../shared/components/alert-message/alert-message.component";
+import { VerificationCodeComponent } from "../verification-code/verification-code.component";
 
 
 
 
 @Component({
   selector: 'app-settings',
-  imports: [DatePipe, InputComponent, ReactiveFormsModule, FormsModule, DatePicker, RadioButtonModule, SkilatonComponent, AlertMessageComponent],
+  imports: [DatePipe, InputComponent, ReactiveFormsModule, FormsModule, DatePicker, RadioButtonModule, SkilatonComponent, AlertMessageComponent, VerificationCodeComponent],
   templateUrl: './settings.component.html',
   styleUrl: './settings.component.scss',
 })
@@ -37,6 +38,8 @@ export class SettingsComponent implements OnInit, OnDestroy {
   private route: Router = inject(Router)
 
   platformId = inject(PLATFORM_ID)
+  userId: WritableSignal<string> = signal('')
+
   userName: WritableSignal<string> = signal('')
   lastName: WritableSignal<string> = signal('')
   userEmail: WritableSignal<string> = signal('')
@@ -57,7 +60,7 @@ export class SettingsComponent implements OnInit, OnDestroy {
   saveFile: WritableSignal<File | null> = signal(null)
   isLoadingProfileData: WritableSignal<boolean> = signal(true);
   closeBoxFlag: WritableSignal<boolean> = signal(false);
-
+  emailIsVerified: WritableSignal<boolean> = signal(false);
 
   ngOnInit(): void {
 
@@ -100,7 +103,7 @@ export class SettingsComponent implements OnInit, OnDestroy {
 
 
         this.isLoadingProfileData.set(false)
-
+        this.userId.set(res.data._id)
         this.userName.set(res.data.firstName)
         this.lastName.set(res.data.lastName)
         this.userEmail.set(res.data.email)
@@ -108,8 +111,7 @@ export class SettingsComponent implements OnInit, OnDestroy {
         this.userBOD.set(res.data.dateOfBirth)
         this.userProfileName.set(res.data.shareProfileName)
         this.userProfileImage.set(res.data.profilePicture)
-        console.log("res.data.gender", res.data.gender);
-
+        this.emailIsVerified.set(res.data.isVerfied)
         this.userGender.set(res.data.gender)
         if (res.data.gender == "0") {
           this.userGender.set("male")
@@ -117,6 +119,26 @@ export class SettingsComponent implements OnInit, OnDestroy {
         if (res.data.gender == "1") {
           this.userGender.set("female")
 
+        }
+
+
+        if (!this.emailIsVerified()) {
+          //send email
+          let data = {
+            userId: this.userId(),
+            email: this.userEmail()
+          }
+          this.authService.sentVerificationEmail(data).subscribe({
+            next: (res) => {
+              console.log(res);
+              this.toastrService.info("email sent")
+
+            },
+            error: (err) => {
+              console.log(err);
+
+            }
+          })
         }
       },
       error: (err) => {

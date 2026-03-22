@@ -3,9 +3,9 @@
 
 @if(!isLoadingProfileData()){
 
-
 <div
     class="my-24 mx-auto relative bg-neutral-primary-soft max-w-xs w-full p-6 border border-default rounded-base shadow-xs">
+    @if(emailIsVerified()){
 
 
     <button (click)="closeBox()" id="dropdownButton" data-dropdown-toggle="dropdown"
@@ -141,6 +141,9 @@
 
 
     </div>
+    }@else {
+    <app-verification-code [email]="userEmail()"></app-verification-code>
+    }
 </div>
 
 
