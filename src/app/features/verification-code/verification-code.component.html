@@ -1,0 +1,70 @@
+<div class="my-24 mx-5">
+
+
+
+    <form [formGroup]="codeForm" (ngSubmit)="regsterSubmit()"
+        class="max-w-xs mx-auto mt-3.5 flex flex-col items-center">
+
+
+        <!-- error place -->
+
+        @if((codeForm.get("codePart1")?.touched && codeForm.get("codePart1")?.invalid) ||
+        (codeForm.get("codePart2")?.touched && codeForm.get("codePart2")?.invalid) ||
+        (codeForm.get("codePart3")?.touched && codeForm.get("codePart3")?.invalid) ||
+        (codeForm.get("codePart4")?.touched && codeForm.get("codePart4")?.invalid)){
+        <div class="mt-0.5 p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400"
+            role="alert">
+            <span class="font-medium">Error:</span> enter 4 digit
+        </div>
+        }
+
+        <p class="h-5 mb-4">enter verification code :</p>
+
+        <div class="flex  mb-2 space-x-2 rtl:space-x-reverse">
+            <div>
+                <label for="code-1" class="sr-only">First code</label>
+                <input formControlName="codePart1" type="text" maxlength="1" data-focus-input-init
+                    data-focus-input-next="code-2" id="code-1"
+                    class="text-center block bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focus:ring-brand focus:border-brand h-10 w-10 shadow-xs placeholder:text-body"
+                    required />
+            </div>
+            <div>
+                <label for="code-2" class="sr-only">Second code</label>
+                <input formControlName="codePart2" type="text" maxlength="1" data-focus-input-init
+                    data-focus-input-prev="code-1" data-focus-input-next="code-3" id="code-2"
+                    class="text-center block bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focus:ring-brand focus:border-brand h-10 w-10 shadow-xs placeholder:text-body"
+                    required />
+            </div>
+            <div>
+                <label for="code-3" class="sr-only">Third code</label>
+                <input formControlName="codePart3" type="text" maxlength="1" data-focus-input-init
+                    data-focus-input-prev="code-2" data-focus-input-next="code-4" id="code-3"
+                    class="text-center block bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focus:ring-brand focus:border-brand h-10 w-10 shadow-xs placeholder:text-body"
+                    required />
+            </div>
+            <div>
+                <label for="code-4" class="sr-only">Fourth code</label>
+                <input formControlName="codePart4" type="text" maxlength="1" data-focus-input-init
+                    data-focus-input-prev="code-3" data-focus-input-next="code-5" id="code-4"
+                    class="text-center block bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focus:ring-brand focus:border-brand h-10 w-10 shadow-xs placeholder:text-body"
+                    required />
+            </div>
+
+
+        </div>
+        <p id="helper-text-explanation" class="px-10 mt-2.5 text-sm text-body">Please introduce the 4 digit code we
+            sent
+            via
+            email.</p>
+
+
+
+        <button type="submit"
+            class="mt-2 max-w-[70%] w-full cursor-pointer text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-lg  px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+            verify email
+        </button>
+
+    </form>
+
+
+</div>

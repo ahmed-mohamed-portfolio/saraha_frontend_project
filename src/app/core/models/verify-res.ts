@@ -1,7 +1,5 @@
 
-
-
-export interface UserDetails {
+export interface VerifyRes {
     status: number;
     message: string;
     data: Data;
@@ -15,7 +13,11 @@ interface Data {
     phone: string;
     dateOfBirth: string;
     gender: string;
+    provider: string;
+    role: string;
     shareProfileName: string;
     profilePicture: string;
+    isVerfied: boolean;
+    credentialsUpdatedAt: string;
     __v: number;
 }

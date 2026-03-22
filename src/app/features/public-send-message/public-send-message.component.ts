@@ -6,6 +6,7 @@ import { ActivatedRoute } from '@angular/router';
 import { NavbarComponent } from "../../shared/components/navbar/navbar.component";
 import { CreateMessageComponent } from '../../shared/components/create-message/create-message.component';
 import { DatePipe } from '@angular/common';
+import { UserDetails } from '../../core/models/user-details';
 
 @Component({
   selector: 'app-public-send-message',

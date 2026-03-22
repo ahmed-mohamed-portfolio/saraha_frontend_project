@@ -10,6 +10,7 @@ import { PublicSendMessageComponent } from './features/public-send-message/publi
 import { authGuard } from './core/guards/auth.guard';
 import { isloggedGuard } from './core/guards/islogged.guard';
 import { OneMessageComponent } from './features/one-message/one-message.component';
+import { VerificationCodeComponent } from './features/verification-code/verification-code.component';
 
 export const routes: Routes = [
 
@@ -17,7 +18,8 @@ export const routes: Routes = [
     {
         path: '', component: AuthLayoutComponent, canActivate: [isloggedGuard], children: [
             { path: 'login', component: LoginComponent, title: 'login page' },
-            { path: 'register', component: RegisterComponent, title: 'register page' }
+            { path: 'register', component: RegisterComponent, title: 'register page' },
+            { path: 'code', component: VerificationCodeComponent, title: 'Verification Code' }
         ]
     },
 

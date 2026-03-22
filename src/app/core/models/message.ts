@@ -1,6 +1,6 @@
 
 
-interface Message {
+export interface Message {
     status: number;
     message: string;
     data: Data;

@@ -124,12 +124,15 @@ export class RegisterComponent implements OnInit, OnDestroy {
       {
         next: (res) => {
           console.log("register response", res);
-
+          sessionStorage.setItem('email', res.data.email);
           if (res.message == "user added") {
-            this.toastrService.success("You can log in now.", "User registered successfully")
+            this.toastrService.success(
+              "A verification code has been sent to your email.",
+              "Sign up successful"
+            );
             this.isLoading.set(false);
             this.errorFlag.set(false)
-            this.route.navigate(["/login"]);
+            this.route.navigate(["/code"]);
           }
         },
 

@@ -12,7 +12,8 @@ import { ToastrService } from 'ngx-toastr';
 import { NewToken } from '../../models/new-token';
 import { jwtDecode } from 'jwt-decode';
 import { DecodeAccessToken } from '../../models/decode-access-token';
-
+import { UserDetails } from '../../models/user-details';
+import { VerifyRes } from '../../models/verify-res';
 
 @Injectable({
   providedIn: 'root',
@@ -162,5 +163,11 @@ export class AuthService {
   deleteAccount(): Observable<RegisterRes> {
 
     return this.http.delete<RegisterRes>(environment.baseUrl + '/user/delete-profile');
+  }
+
+
+
+  verifyEmail(data: any): Observable<VerifyRes> {
+    return this.http.post<VerifyRes>(environment.baseUrl + '/auth/verify', data)
   }
 }
