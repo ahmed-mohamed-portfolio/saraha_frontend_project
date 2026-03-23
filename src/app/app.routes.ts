@@ -11,6 +11,7 @@ import { authGuard } from './core/guards/auth.guard';
 import { isloggedGuard } from './core/guards/islogged.guard';
 import { OneMessageComponent } from './features/one-message/one-message.component';
 import { VerificationCodeComponent } from './features/verification-code/verification-code.component';
+import { ForgetpasswordComponent } from './shared/components/forgetpassword/forgetpassword.component';
 
 export const routes: Routes = [
 
@@ -32,6 +33,8 @@ export const routes: Routes = [
     { path: 'oneMesssage/:msgId', component: OneMessageComponent, title: 'One Message' }
     ,
     { path: 'public_message/:profileName', component: PublicSendMessageComponent, title: 'send message' }
+    ,
+    { path: 'forgetpassword', component: ForgetpasswordComponent, title: 'forget password' }
     ,
     { path: '**', component: NotFoundComponent, title: 'notFound' }
 

@@ -16,6 +16,12 @@ import { VerifyRes } from '../../models/verify-res';
 import { UserSendEmail } from '../../models/user-send-email';
 import { SentEmailRes } from '../../models/sent-email-res';
 import { VerifyEmailReq } from '../../models/verify-email-req';
+import { Email } from '../../models/email';
+import { SendemailRes } from '../../models/sendemail-res';
+import { SendCode } from '../../models/send-code';
+import { OtpRes } from '../../models/otp-res';
+import { InputDataResetpass } from '../../models/input-data-resetpass';
+import { PassChangedRes } from '../../models/pass-changed-res';
 
 @Injectable({
   providedIn: 'root',
@@ -158,4 +164,41 @@ export class AuthService {
   sentVerificationEmail(data: UserSendEmail): Observable<SentEmailRes> {
     return this.http.post<SentEmailRes>(environment.baseUrl + '/auth/sendVerificationEmail', data)
   }
+
+
+
+
+
+
+
+
+
+
+
+  sendEmailForgetPassowrd(email: Email): Observable<SendemailRes> {
+    return this.http.post<SendemailRes>(environment.baseUrl + '/auth/forget-password', email)
+  }
+
+
+
+
+  verifyCode(data: SendCode): Observable<OtpRes> {
+
+
+    return this.http.post<OtpRes>(environment.baseUrl + '/auth/verify-code', data)
+  }
+
+
+
+
+  resetPassword(data: InputDataResetpass): Observable<PassChangedRes> {
+    return this.http.put<PassChangedRes>(environment.baseUrl + '/auth/edit-user-password', data)
+  }
+
+
+
+
+
+
+
 }
