@@ -50,6 +50,10 @@ export class AuthService {
 
         this.logOutFromAllDevices().subscribe({
           next: (res) => {
+            this.router.navigate(['/login'])
+            this.cookieService.delete('accessToken')
+            this.cookieService.delete('refreshToken')
+            this.toastrService.info("You have successfully logged out.", "Logout Successful")
             console.log(res);
 
 
@@ -60,6 +64,11 @@ export class AuthService {
 
           }
         })
+
+
+
+
+
 
         break;
 
@@ -68,6 +77,10 @@ export class AuthService {
 
         this.logOutFromTHisDevice().subscribe({
           next: (res) => {
+            this.cookieService.delete('accessToken')
+            this.cookieService.delete('refreshToken')
+            this.router.navigate(['/login'])
+            this.toastrService.info("You have successfully logged out.", "Logout Successful")
             console.log(res);
 
           },
@@ -78,8 +91,22 @@ export class AuthService {
           }
         })
 
+
+
         break;
 
+
+
+      case 'out':
+
+        this.router.navigate(['/login'])
+        this.cookieService.delete('accessToken')
+        this.cookieService.delete('refreshToken')
+
+
+        this.toastrService.info("You have successfully logged out.", "Logout Successful")
+
+        break;
       default:
         console.log("problem in sifn out");
 
@@ -89,12 +116,7 @@ export class AuthService {
 
 
 
-    this.router.navigate(['/login'])
-    this.cookieService.delete('accessToken')
-    this.cookieService.delete('refreshToken')
 
-
-    this.toastrService.info("You have successfully logged out.", "Logout Successful")
   }
 
   logOutFromAllDevices(): Observable<any> {

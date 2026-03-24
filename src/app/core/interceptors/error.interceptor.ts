@@ -18,9 +18,8 @@ export const errorInterceptor: HttpInterceptorFn = (req, next) => {
       //* i need to study switchMap well .. 
       if (
         err.error?.errorMessage === 'jwt expired' &&
-        !req.url.includes('/auth/generate-access-token') &&
-        !req.url.includes('/auth/logout') &&
-        !req.url.includes('/logout-from-all-devices')
+        !req.url.includes('/auth/generate-access-token')
+
 
       ) {
         return authService.generateAccessTokenByRefreshToken().pipe(
