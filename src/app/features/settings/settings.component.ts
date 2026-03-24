@@ -286,7 +286,7 @@ export class SettingsComponent implements OnInit, OnDestroy {
     this.authService.deleteAccount().subscribe({
       next: (res) => {
         console.log(res);
-        this.authService.signOut("all")
+        this.authService.signOut("out")
       },
       error: (err) => {
         console.log(err);
