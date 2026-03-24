@@ -2,10 +2,9 @@ import { AuthService } from './../../core/services/api/auth.service';
 import { Component, inject, input, OnInit } from '@angular/core';
 import { initFlowbite } from 'flowbite';
 import { FlowbiteService } from '../../core/services/flowbite.service';
-import { FormBuilder, FormGroup, Validators, ɵInternalFormsSharedModule, ReactiveFormsModule } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import { Router } from '@angular/router';
-import { VerifyEmailReq } from '../../core/models/verify-email-req';
 
 @Component({
   selector: 'app-verification-code',
