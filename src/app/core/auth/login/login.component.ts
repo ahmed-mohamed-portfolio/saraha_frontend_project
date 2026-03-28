@@ -1,12 +1,13 @@
 import { AuthService } from './../../services/api/auth.service';
 import { Component, inject, OnDestroy, OnInit, PLATFORM_ID, signal } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { Router, RouterLink } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { InputComponent } from '../../../shared/components/input/input.component';
 import { Subscription } from 'rxjs';
 import { ToastrService } from 'ngx-toastr';
 import { CookieService } from 'ngx-cookie-service';
-import { isPlatformBrowser, isPlatformServer } from '@angular/common';
+import { isPlatformBrowser } from '@angular/common';
+import { environment } from '../../../../environments/environment';
 
 
 declare const google: any;
@@ -30,10 +31,12 @@ export class LoginComponent implements OnInit, OnDestroy {
   //* api variables
   authService: AuthService = inject(AuthService)
   private router: Router = inject(Router);
+  private readonly activatedRoute = inject(ActivatedRoute);
   subscribe: Subscription = new Subscription()
 
   ngOnInit(): void {
     this.loginInitForm();
+    this.handleGoogleRedirectError();
   }
 
 
@@ -112,32 +115,17 @@ export class LoginComponent implements OnInit, OnDestroy {
 
     google.accounts.id.initialize({
       client_id: '454721329331-ieb8vd87r8mlk8bjf4p60ogm0n5biljd.apps.googleusercontent.com',
-      callback: (response: any) => {
-
-        this.authService.googleLogin(response.credential).subscribe({
-          next: (res) => {
-            console.log("login response by gmail", res);
-
-            if (res.data.user.confireEmail) {
-              console.log("res.data.user.confireEmail", res.data.user.confireEmail);
-
-              this.afterUserSuccessLogin(res.data.accessToken, res.data.refreshToken)
-            }
-
-          },
-          error: (err) => {
-            console.log("google login error", err);
-
-          }
-        })
-      }
+      ux_mode: 'redirect',
+      login_uri: `${environment.baseUrl}/auth/signup/gmail`,
+      context: 'signup',
     });
 
     google.accounts.id.renderButton(
       document.getElementById('google-btn'),
       {
         theme: 'outline',
-        size: 'large'
+        size: 'large',
+        text: 'signup_with',
       }
     );
 
@@ -154,6 +142,26 @@ export class LoginComponent implements OnInit, OnDestroy {
     ) as HTMLElement | null;
 
     realGoogleButton?.click();
+  }
+
+  private handleGoogleRedirectError(): void {
+    if (!isPlatformBrowser(this.platformId)) {
+      return;
+    }
+
+    const googleError = this.activatedRoute.snapshot.queryParamMap.get('googleError');
+
+    if (!googleError) {
+      return;
+    }
+
+    this.errorMsg.set(googleError);
+    this.toastrService.error(googleError, 'Google Sign Up Failed');
+    this.router.navigate([], {
+      queryParams: { googleError: null },
+      queryParamsHandling: 'merge',
+      replaceUrl: true,
+    });
   }
 
 
