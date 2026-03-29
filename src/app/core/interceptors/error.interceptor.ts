@@ -24,12 +24,13 @@ export const errorInterceptor: HttpInterceptorFn = (req, next) => {
       ) {
         return authService.generateAccessTokenByRefreshToken().pipe(
           switchMap((res) => {
-            cookieService.set('accessToken', res.data);
 
             const newReq = req.clone({
+
               setHeaders: {
-                authorization: 'Bearer ' + res.data,
+                authorization: 'Bearer ' + cookieService.get('accessToken'),
               },
+
             });
 
             return next(newReq);

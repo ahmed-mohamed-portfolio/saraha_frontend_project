@@ -1,24 +1,19 @@
-import { isPlatformServer } from '@angular/common';
-import { inject, PLATFORM_ID } from '@angular/core';
+import { AuthService } from './../services/api/auth.service';
+import { inject, REQUEST } from '@angular/core';
 import { CanActivateFn, Router } from '@angular/router';
-import { CookieService } from 'ngx-cookie-service';
+import { catchError, map, of } from 'rxjs';
+
 
 export const authGuard: CanActivateFn = (route, state) => {
 
-  const cookieService = inject(CookieService)
   const router = inject(Router)
+  const authService = inject(AuthService)
 
-  //!!! that is dangerous and i need to change it
-  let platformId = inject(PLATFORM_ID)
-  if (isPlatformServer(platformId)) {
-    return true
-  }
+  return authService.checkAuth().pipe(
+    map((response) => response.auth ? true : router.parseUrl('/login')),
+    catchError(() => of(router.parseUrl('/login')))
+  );
 
-
-  if (cookieService.get('accessToken')) {
-    return true
-  }
-  else {
-    return router.parseUrl('/login')
-  }
 };
+
+

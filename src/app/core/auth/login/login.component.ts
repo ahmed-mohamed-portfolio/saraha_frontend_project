@@ -78,7 +78,7 @@ export class LoginComponent implements OnInit, OnDestroy {
           console.log("login response", res);
 
           if (res.message == "user login successfully") {
-            this.afterUserSuccessLogin(res.data.accessToken, res.data.refreshToken)
+            this.afterUserSuccessLogin()
           }
         },
 
@@ -168,9 +168,7 @@ export class LoginComponent implements OnInit, OnDestroy {
 
 
 
-  afterUserSuccessLogin(accessToken: string, refreshToken: string) {
-    this.cookieService.set('accessToken', accessToken)
-    this.cookieService.set('refreshToken', refreshToken)
+  afterUserSuccessLogin() {
 
     this.toastrService.success("You have logged in successfully.", "Login Successful")
     this.router.navigate(["/messages"])

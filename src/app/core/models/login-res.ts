@@ -8,7 +8,6 @@ export interface LoginRes {
 interface Data {
     existUser: ExistUser;
     accessToken: string;
-    refreshToken: string;
 }
 
 interface ExistUser {

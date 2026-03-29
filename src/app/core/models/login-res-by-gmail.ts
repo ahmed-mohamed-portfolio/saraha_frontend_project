@@ -10,7 +10,6 @@ interface LoginResByGmail {
 interface Data {
     user: User;
     accessToken: string;
-    refreshToken: string;
 }
 
 interface User {

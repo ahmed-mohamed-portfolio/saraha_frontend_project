@@ -1,15 +1,19 @@
-import { CookieService } from 'ngx-cookie-service';
 import { CanActivateFn, Router } from '@angular/router';
-import { inject } from '@angular/core';
+import { inject, REQUEST } from '@angular/core';
+import { AuthService } from '../services/api/auth.service';
+import { catchError, map, of } from 'rxjs';
+
 
 export const isloggedGuard: CanActivateFn = (route, state) => {
 
-  const cookieService = inject(CookieService)
   const router = inject(Router)
+  const authService = inject(AuthService)
 
-  if (cookieService.get("accessToken")) {
-    return router.parseUrl('messages')
-  }
+  return authService.checkAuth().pipe(
+    map((response) => response.auth ? router.parseUrl('/messages') : true),
+    catchError(() => of(true))
+  );
 
-  return true;
 };
+
+

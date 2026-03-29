@@ -1,5 +1,5 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { inject, Injectable } from '@angular/core';
+import { inject, Injectable, REQUEST } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from '../../../../environments/environment.development';
 import { RegisterRes } from '../../models/register-res';
@@ -40,7 +40,7 @@ export class AuthService {
   }
 
   login(data: Login): Observable<LoginRes> {
-    return this.http.post<LoginRes>(environment.baseUrl + '/auth/login', data);
+    return this.http.post<LoginRes>(environment.baseUrl + '/auth/login', data, { withCredentials: true });
   }
 
   signOut(flag: string) {
@@ -52,7 +52,6 @@ export class AuthService {
           next: (res) => {
             this.router.navigate(['/login'])
             this.cookieService.delete('accessToken')
-            this.cookieService.delete('refreshToken')
             this.toastrService.info("You have successfully logged out.", "Logout Successful")
             console.log(res);
 
@@ -78,7 +77,6 @@ export class AuthService {
         this.logOutFromTHisDevice().subscribe({
           next: (res) => {
             this.cookieService.delete('accessToken')
-            this.cookieService.delete('refreshToken')
             this.router.navigate(['/login'])
             this.toastrService.info("You have successfully logged out.", "Logout Successful")
             console.log(res);
@@ -101,7 +99,6 @@ export class AuthService {
 
         this.router.navigate(['/login'])
         this.cookieService.delete('accessToken')
-        this.cookieService.delete('refreshToken')
 
 
         this.toastrService.info("You have successfully logged out.", "Logout Successful")
@@ -143,14 +140,8 @@ export class AuthService {
 
   generateAccessTokenByRefreshToken(): Observable<NewToken> {
 
-    let refreshToken = this.cookieService.get("refreshToken");
 
-    const headers = new HttpHeaders({
-      Authorization: `${refreshToken}`
-    });
-
-
-    return this.http.get<NewToken>(environment.baseUrl + '/auth/generate-access-token', { headers });
+    return this.http.get<NewToken>(environment.baseUrl + '/auth/generate-access-token', { withCredentials: true });
 
   }
 
@@ -218,6 +209,23 @@ export class AuthService {
   }
 
 
+
+
+
+
+
+
+  checkAuth(): Observable<{ auth: boolean }> {
+
+    const request = inject(REQUEST, { optional: true }) as Request | null;
+    const cookieHeader = request?.headers.get('cookie') ?? '';
+
+    return this.http.get<{ auth: boolean }>(environment.baseUrl + '/get-cookie', {
+      headers: cookieHeader ? { cookie: cookieHeader } : undefined,
+      withCredentials: true,
+    });
+
+  }
 
 
 
