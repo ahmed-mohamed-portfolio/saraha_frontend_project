@@ -55,19 +55,12 @@ export class AuthService {
             this.toastrService.info("You have successfully logged out.", "Logout Successful")
             console.log(res);
 
-
           },
           error: (err) => {
             console.log(err);
 
-
           }
         })
-
-
-
-
-
 
         break;
 
@@ -89,21 +82,15 @@ export class AuthService {
           }
         })
 
-
-
         break;
-
-
 
       case 'out':
 
         this.router.navigate(['/login'])
         this.cookieService.delete('accessToken')
-
-
         this.toastrService.info("You have successfully logged out.", "Logout Successful")
-
         break;
+
       default:
         console.log("problem in sifn out");
 

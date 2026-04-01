@@ -1,6 +1,6 @@
 export const environment = {
 
-    baseUrl: 'http://localhost:3000',
-    frontUrl: 'http://localhost:4200'
+    baseUrl: 'https://nonphilosophic-emerie-vinelike.ngrok-free.dev',
+    frontUrl: 'https://saraha-app.netlify.app'
 
 };
