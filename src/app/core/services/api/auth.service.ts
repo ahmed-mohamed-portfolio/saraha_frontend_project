@@ -40,7 +40,7 @@ export class AuthService {
   }
 
   login(data: Login): Observable<LoginRes> {
-    return this.http.post<LoginRes>(environment.baseUrl + '/auth/login', data, { withCredentials: true });
+    return this.http.post<LoginRes>(environment.baseUrl + '/auth/login', data);
   }
 
   signOut(flag: string) {
@@ -141,7 +141,7 @@ export class AuthService {
   generateAccessTokenByRefreshToken(): Observable<NewToken> {
 
 
-    return this.http.get<NewToken>(environment.baseUrl + '/auth/generate-access-token', { withCredentials: true });
+    return this.http.get<NewToken>(environment.baseUrl + '/auth/generate-access-token');
 
   }
 
